@@ -37,3 +37,5 @@ retorne aux;
 fim
 
 **minha resposta: Pra mim seria O(n), pois é uma repetição de um for n vezes para o calculo do faotiral**
+
+> CORRETO
