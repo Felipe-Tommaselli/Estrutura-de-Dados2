@@ -1,7 +1,7 @@
 //* Aula 2 da 5 semana, bubblesort
 // mesmo projeto das priemrias aulas
 
-#define TAM 1000000001
+#define TAM 11
 
 typedef int elem;
 

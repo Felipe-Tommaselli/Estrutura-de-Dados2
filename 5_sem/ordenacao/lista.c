@@ -115,20 +115,19 @@ void ordena_bubblesort(lista *l){
         iteracao++;
     }
 }
-
 void ordena_bubblesort_aprimorado(lista *l){
-    long continua = 0, iteracao = 1;
+    long continua = 1, iteracao = 1;
     elem aux;
-    while (continua == 1){
+    while (continua == 1) {
         continua = 0;
-        for (long i = 0; i < l->tamanho - iteracao; i++)
-            if (l->elementos[i] > l->elementos[i + 1]){
+        for (long i = 0; i < l->tamanho-iteracao; i++)
+            if (l->elementos[i] > l->elementos[i+1]) { //? comparacao para troca 
                 //? faz a troca
                 aux = l->elementos[i];
                 l->elementos[i] = l->elementos[i+1];
                 l->elementos[i+1] = aux;
-                continua = 1; //? tira do loop caso o vetor esteja ordenado
+                continua = 1;
             }
         iteracao++;
-    }   
+    }
 }
