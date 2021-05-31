@@ -1,6 +1,6 @@
-//* Aula 2 da 5 semana, bubblesort
+//* Aula 2 da 6 semana, quicksort aprimorad (com duplicatas)
 // mesmo projeto das priemrias aulas
-#define repeticoes 2
+#define repeticoes 10
 #include "lista.h"
 #include <time.h>
 #include <stdio.h>
@@ -23,17 +23,18 @@ int main(void) {
             for (long j = 0; j < pow(10,ordem); j++)
                 insere(&l, rand() % TAM);
             
-            imprime(&l); //? imprime antes de ordenar
+            //imprime(&l); //? imprime antes de ordenar
     
             //? ordena e guarda tempo decorrido
             tempo_ini = clock(); //? guarda tempo inicial
             //ordena_nlogn(&l);
             //ordena_quadratico(&l);
             //ordena_bubblesort(&l);
-            ordena_bubblesort_aprimorado(&l);
+            //ordena_bubblesort_aprimorado(&l);
+            ordena_quicksort(&l);
             soma_tempos += clock() - tempo_ini; //? considera tempo decorrido desta rodada 
     
-            imprime(&l); //? imprime apos ordenar
+            //imprime(&l); //? imprime apos ordenar
             
             //? apaga a lista
             destroi(&l);
@@ -43,3 +44,14 @@ int main(void) {
 
     return 0; //? sucesso
 }
+
+/* quicksort (com duplicatas):
+
+[10 repeticoes]
+Entrada: 10; Tempo total: 0.0000000000
+Entrada: 100; Tempo total: 0.0000000000
+Entrada: 1000; Tempo total: 0.0000000000
+Entrada: 10000; Tempo total: 0.0031250000
+Entrada: 100000; Tempo total: 0.0187500000
+Entrada: 1000000; Tempo total: 0.2703125000
+*/
