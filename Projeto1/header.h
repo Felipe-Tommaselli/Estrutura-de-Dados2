@@ -10,7 +10,7 @@ Explicação projeto:  https://ae4.tidia-ae.usp.br/access/content/attachment/61c
 * Arquivo header
 */
 
-#define TAM 100001
+#define TAM 10000001
 
 typedef int elem; // inicia o tipo elemento como int
 
@@ -22,6 +22,8 @@ typedef struct{
 void cria(list *l);
 void destroi(list *l);
 int insere(list *l, elem e);
+int insere_crescente(list *l, elem e);
+int insere_decrescente(list *l, elem e);
 void imprime(list *l);
 void bubblesort(list *l);
 void bubblesort_aprimorado(list *l);

@@ -15,7 +15,7 @@ Explicação projeto:  https://ae4.tidia-ae.usp.br/access/content/attachment/61c
 #include <stdio.h>
 #include <stdlib.h>
 
-void cria(list *l) {
+void cria(list *l){
     l->tamanho = 0; // inicia a lista com tamanho 0
     l->elementos = malloc(sizeof(elem)*TAM); //inicia a lista dinamicamente com TAM elementos
 }
@@ -26,12 +26,32 @@ void destroi(list *l) {
     l->tamanho = 0; // volta o tamanho para 0
 }
 
-int insere(list *l, elem e) {
+int insere(list *l, elem e){
     if(l->tamanho == TAM)
         return 1; // erro, lista cheia
     l->elementos[l->tamanho] = e; //insere o elemento na ultima posição
     l->tamanho++; // aumenta o tamanho da lista
     return 0; // sucesso
+}
+
+int insere_crescente(list *l, elem e){
+    if(l->tamanho == TAM)
+        return 1; // erro, lista cheia
+    while(l->tamanho < e){
+        l->elementos[l->tamanho] = l->tamanho; //insere o elemento na ultima posição
+        l->tamanho++; // aumenta o tamanho da lista    
+        return 0; // sucesso
+    }
+}
+
+int insere_decrescente(list *l, elem e){
+    if(l->tamanho == TAM)
+        return 1; // erro, lista cheia
+    while(l->tamanho < e){
+        l->elementos[l->tamanho] = e - l->tamanho; //insere o elemento na ultima posição
+        l->tamanho++; // aumenta o tamanho da lista    
+        return 0; // sucesso
+    }
 }
 
 void imprime(list *l) {
