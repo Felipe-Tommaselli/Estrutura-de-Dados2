@@ -10,7 +10,7 @@ Explicação projeto:  https://ae4.tidia-ae.usp.br/access/content/attachment/61c
 * Arquivo header
 */
 
-#define TAM 10000001
+#define TAM 11
 
 typedef int elem; // inicia o tipo elemento como int
 
@@ -28,3 +28,5 @@ void imprime(list *l);
 void bubblesort(list *l);
 void bubblesort_aprimorado(list *l);
 void quicksort(list *l);
+void radixsort(list *l);
+void heapsort(list *l);

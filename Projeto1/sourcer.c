@@ -68,16 +68,18 @@ void imprime(list *l) {
     }
 }
 
+//* BUBBLESORT
+
 void bubblesort(list *l){
     // Declaracoes
     int i = 0, j = 0;
-    int n = l->tamanho;
+    int tam = l->tamanho;
     elem aux;
 
     // loop passando pela lista inteira
-    for(i = 0; i <= n; i++){
+    for(i = 0; i <= tam; i++){
         // loop pelas subsequencias possiveis de troca
-       for(j = 0; j <= n - i - 2; j++){
+       for(j = 0; j <= tam - i - 2; j++){
            // condicao de troca
            if(l->elementos[j] > l->elementos[j + 1]){
                // troca
@@ -89,16 +91,18 @@ void bubblesort(list *l){
     }
 }
 
+//* BUBBLESORT_APRIMORADO
+
 void bubblesort_aprimorado(list *l){
     // Declaracoes
     int i = 0, j = 0, ordenado = 1;
-    int n = l->tamanho;
+    elem tam = l->tamanho;
     elem aux;
 
     // loop passando pela lista inteira
-    for(i = 0; i <= n; i++){
+    for(i = 0; i <= tam; i++){
         // loop pelas subsequencias possiveis de troca
-       for(j = 0; j <= n - i - 2; j++){
+       for(j = 0; j <= tam - i - 2; j++){
            // condicao de troca
            if(l->elementos[j] > l->elementos[j + 1]){
                // troca
@@ -115,10 +119,12 @@ void bubblesort_aprimorado(list *l){
     }
 }
 
-/*
+//* QUICKSORT
+
 int particion(list *l, int ini, int fim){
-    int pivo = l->elementos[fim];
-    int i = ini - 1, j = 0;
+
+    elem pivo = l->elementos[fim];
+    int i = ini - 1, j = ini;
     elem aux;
 
     while(j <= fim - 1){
@@ -140,7 +146,6 @@ int particion(list *l, int ini, int fim){
 int random_particion(list *l, int ini, int fim){
     int k = 0;
     elem aux;
-
     k = rand() % l->tamanho;
 
     aux = l->elementos[k];
@@ -152,19 +157,93 @@ int random_particion(list *l, int ini, int fim){
 
 void quicksort_rec(list *l, int ini, int fim){
     int pivo = 0;
-
-    if(ini < fim)
+    if(ini < fim){
         pivo = random_particion(l, ini, fim);
         quicksort_rec(l, ini, pivo - 1);
         quicksort_rec(l, pivo + 1, fim);
+    }
 }
 
 void quicksort(list *l){
-    quicksort_rec(l, 0, l->tamanho - 1);
+        quicksort_rec(l, 0, l->tamanho - 1);
 }
 
-// quicksort:
-// Original: (6, 10, 6, 2, 1, 4, 0, 6, 3, 1)
-// Segmentation fault (core dumped)
+//* RADIX SORT
 
-*/
+void Counting_sort(list *l, elem tam, elem pos){
+    int i = 0;
+    elem B[10] = {0}, key = 0;
+
+    for(int i = 0; i < tam - 1; i++){
+        key = l->elementos[i]/pos;
+        key = key % 10;
+        B[key] = B[key] + 1;
+    }
+    for(i = 1; i < 9; i++)
+        B[i] = B[i] + B[i - 1];
+
+    elem C[tam];
+    if(tam > 0)
+        for(i =0; i<tam; i++)
+            C[i] = 0;
+    
+    for(i = tam - 1; i > 0; i--){
+        key = l->elementos[i]/pos;
+        key = key % 10;
+        B[key] = B[key] - 1;
+        C[B[key]] = l->elementos[i];
+    }
+
+    for(i = 0; i < tam - 1; i++)
+        l->elementos[i] = C[i];
+}
+
+void radixsort(list *l){
+    elem tam = l->tamanho, maior = l->elementos[0], pos = 0;
+    
+    for(int i = 0; i < tam; i++)
+        if (l->elementos[i] > maior)
+    	    maior = l->elementos[i];
+    
+    pos = 1;
+
+    while((maior/pos) > 0){
+        Counting_sort(l, tam, pos);
+        pos *= 10;
+    }
+}
+
+//* HEAPSORT
+
+void Heapify(list *l,elem tam,int i){
+    elem maior = i, aux = 0; 
+    elem esq = (2*i) + 1, dir = (2*i) + 2;
+    
+    if(esq < tam && l->elementos[esq] > l->elementos[maior])
+        maior = esq; 
+
+    if(dir < tam && l->elementos[dir] > l->elementos[maior])
+        maior = dir;
+
+    if(maior > i || maior < i){
+        aux = l->elementos[i];
+        l->elementos[i] = l->elementos[maior];
+        l->elementos[maior] = aux;
+        Heapify(l, tam, maior);
+    }
+}
+
+void heapsort(list *l){
+    elem tam = l->tamanho, aux;
+    int i = 0;
+
+    for(i = (tam/2) - 1; i >= 0; i--)
+        Heapify(l, tam, i);
+
+    for(i = tam - 1; i >= 1; i--){
+        aux = l->elementos[0];
+        l->elementos[0] = l->elementos[i];
+        l->elementos[i] = aux;
+        Heapify(l, i, 0);
+    }
+}
