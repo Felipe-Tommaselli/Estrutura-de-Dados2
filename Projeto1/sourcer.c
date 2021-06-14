@@ -144,9 +144,11 @@ int particion(list *l, int ini, int fim){
 }
 
 int random_particion(list *l, int ini, int fim){
-    int k = 0;
+    int k =  ini + rand() % (fim - ini + 1);
+    // printf("l->tamanho: %ld\n", l->tamanho);
+    // printf("fim - ini + 1: %d\n", fim - ini + 1);
+
     elem aux;
-    k = rand() % l->tamanho;
 
     aux = l->elementos[k];
     l->elementos[k] = l->elementos[fim];
@@ -172,40 +174,37 @@ void quicksort(list *l){
 
 void Counting_sort(list *l, elem tam, elem pos){
     int i = 0;
-    elem B[10] = {0}, key = 0;
+    elem key = 0;
+    long* B = calloc(10, sizeof(long)); 
 
-    for(int i = 0; i < tam - 1; i++){
+    for(int i = 0; i <= tam - 1; i++){
         key = l->elementos[i]/pos;
         key = key % 10;
         B[key] = B[key] + 1;
     }
-    for(i = 1; i < 9; i++)
+    for(i = 1; i <= 9; i++)
         B[i] = B[i] + B[i - 1];
 
-    elem C[tam];
-    if(tam > 0)
-        for(i =0; i<tam; i++)
-            C[i] = 0;
+    long* C = calloc(tam, sizeof(long));
     
-    for(i = tam - 1; i > 0; i--){
+    for(i = tam - 1; i >= 0; i--){
         key = l->elementos[i]/pos;
         key = key % 10;
         B[key] = B[key] - 1;
         C[B[key]] = l->elementos[i];
     }
 
-    for(i = 0; i < tam - 1; i++)
+    for(i = 0; i <= tam - 1; i++)
         l->elementos[i] = C[i];
 }
 
 void radixsort(list *l){
-    elem tam = l->tamanho, maior = l->elementos[0], pos = 0;
+    elem tam = l->tamanho, maior = l->elementos[0], pos = 1;
     
     for(int i = 0; i < tam; i++)
         if (l->elementos[i] > maior)
     	    maior = l->elementos[i];
     
-    pos = 1;
 
     while((maior/pos) > 0){
         Counting_sort(l, tam, pos);
