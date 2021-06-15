@@ -42,8 +42,8 @@ int main(int argc, char *argv[]){
             //bubblesort(&l);
             //bubblesort_aprimorado(&l);
             //quicksort(&l);
-            radixsort(&l);
-            //heapsort(&l);
+            //radixsort(&l);
+            heapsort(&l);
 
             soma_tempos += clock() - tempo_ini; // considera tempo decorrido desta rodada
 

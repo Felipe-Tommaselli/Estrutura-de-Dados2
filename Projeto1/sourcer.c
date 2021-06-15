@@ -171,78 +171,131 @@ void quicksort(list *l){
 }
 
 //* RADIX SORT
+/* 
+O radix sort é um algoritmo de ordenação rapido e estavel. 
+Ele possui complexidade linear no pior caso.
+Seu funcionamento é baseado na ordenaçação por meio dos algoritmos (digitos individuais), que
+constituem a cadeira de caracteres que foram o numero na i-esima posicao a ser ordenado.
+Essa ordenacao é baseada por chaves unicas de indexação que garantem a ordenação final dos elementos 
+*/
 
 void Counting_sort(list *l, elem tam, elem pos){
-    int i = 0;
-    elem key = 0;
+    // Declaracoes
+    int i = 0; // variavel para percorrer os loops
+    elem key = 0; // atribui 0 para a varaivel chave por enquanto
+    // inicia dinamicamente o vetor B com 10 elementos ja atribuindo 0 nele inteiro
     long* B = calloc(10, sizeof(long)); 
-
-    for(int i = 0; i <= tam - 1; i++){
-        key = l->elementos[i]/pos;
-        key = key % 10;
-        B[key] = B[key] + 1;
-    }
-    for(i = 1; i <= 9; i++)
-        B[i] = B[i] + B[i - 1];
-
+    // inicia dinamicamente o vetor C com o tamanho de elementos da lista, atribuindo 0 tambem
     long* C = calloc(tam, sizeof(long));
     
-    for(i = tam - 1; i >= 0; i--){
+    // loop percorrendo o vetor inteiro
+    for(int i = 0; i <= tam - 1; i++){
+        // variavel chave recebe o valor do elemento em relacao a sua posicao
         key = l->elementos[i]/pos;
+        // a propria chave recebe o resto por 10 da antiga relacao entre elemento e pos 
+        // isto é, no decorrer das iteracoes separamos os digitos do valor querido
+        // (unidade, dezena, centena ...) 
         key = key % 10;
+        // o valor atual de B na chave é incrementado 
+        B[key] += 1;
+    }
+
+    // looping de 1 a 9
+    for(i = 1; i <= 9; i++)
+        // o elemento de B na i-ésima posicao recebe o valor acumulado ate a essa posicao
+        // ou seja, o elemento é montado novamente
+        B[i] = B[i] + B[i - 1];
+
+    // looping percorrendo o vetor de forma descrescente
+    for(i = tam - 1; i >= 0; i--){
+        // variavel chave recebe o valor do elemento em relacao a sua posicao
+        key = l->elementos[i]/pos;
+        // a propria chave recebe o resto por 10 da antiga relacao entre elemento e pos 
+        // isto é, no decorrer das iteracoes separamos os digitos do valor querido
+        // (unidade, dezena, centena ...) 
+        key = key % 10;
+        // o valor atual de C na chave é decrementado 
         B[key] = B[key] - 1;
+        // o elemento de C na posicao dada pelo valor de B na posicao atual da chave
+        // recebe o elemento da posicao i, ou seja, apos abrirmos os algoritmos do valor
+        // que sera ordenado, ele é comparado e montado novamente, para assim ser ordenao
+        // a partir das comparações entre seus alogoritimos. No final desse processo, C tera
+        // recebido os elementos do vetor inicial na posicao correta e estara ordenado
         C[B[key]] = l->elementos[i];
     }
 
+    // loop percorrendo o vetor de forma crescente
     for(i = 0; i <= tam - 1; i++)
+        // a lista recebe o valor de C na posicao i, uma vez que C ja esta com o vetor ordenado
         l->elementos[i] = C[i];
 }
 
 void radixsort(list *l){
-    elem tam = l->tamanho, maior = l->elementos[0], pos = 1;
+    // Declaracoes
+    elem tam = l->tamanho; //atribui a vraivel tamanho o tamanho do vetor
+    elem maior = l->elementos[0]; //atribui a varaivel maior o primeiro elemento
+    elem pos = 1; //atribui a varaivel pos valor 1 
     
+    // loop percorrendo o vetor todo
     for(int i = 0; i < tam; i++)
+        // procura o maior elemento
         if (l->elementos[i] > maior)
-    	    maior = l->elementos[i];
+    	    // atrbui para maior o maior valor ate o momento
+            maior = l->elementos[i];
     
-
+    // loop enquanto maior for maior que pos
     while((maior/pos) > 0){
-        Counting_sort(l, tam, pos);
-        pos *= 10;
+        Counting_sort(l, tam, pos); // funcao de ordenacao do radixsort
+        pos *= 10; // aumenta a pos em potencias de 10
     }
 }
 
 //* HEAPSORT
 
 void Heapify(list *l,elem tam,int i){
-    elem maior = i, aux = 0; 
-    elem esq = (2*i) + 1, dir = (2*i) + 2;
+    // Declaracoes
+    elem maior = i; // define o elemento maior como i por enquanto 
+    elem aux = 0;  // variavel de troca
+    elem esq = (2*i) + 1; // declara e atribue valor para variavel da esquerda  
+    elem dir = (2*i) + 2; // declara e atribue valor para variavel da esquerda
     
+    // comparação entre o elemento da esquerda e o maior elemento 
     if(esq < tam && l->elementos[esq] > l->elementos[maior])
+        // se o elemento da esquerda relmente for o maior, maior recebe ele
         maior = esq; 
 
+    // comparação entre o elemento da direita e o maior elemento 
     if(dir < tam && l->elementos[dir] > l->elementos[maior])
+        // se o elemento da direita relmente for o maior, maior recebe ele
         maior = dir;
 
+    //  compara se maior é diferente de i
     if(maior > i || maior < i){
+        // nesse caso trocamos o elemento da posicao i com o elemento da maior posicao
         aux = l->elementos[i];
         l->elementos[i] = l->elementos[maior];
         l->elementos[maior] = aux;
+        // o algoritmo entao é chamado recursivamente, com o proximo sendo o nosso atual maior
         Heapify(l, tam, maior);
     }
 }
 
 void heapsort(list *l){
-    elem tam = l->tamanho, aux;
-    int i = 0;
+    // Declarações
+    elem tam = l->tamanho; // tam é iniciado com o tamanho do vetor lista
+    elem aux; // elemento auxiliar para trocas
+    int i = 0; // operador de iteração para os loopings
 
+    // Looping varrendo a metade esquerda do vetor (partindo da metade ate o inicio)
     for(i = (tam/2) - 1; i >= 0; i--)
-        Heapify(l, tam, i);
+        Heapify(l, tam, i); // função com a ordenação 
 
+    // looping varrendo quase todo o vetor (partindo do fim ate o segundo elemento)
     for(i = tam - 1; i >= 1; i--){
+        // troca entre o primeiro elemento e o i-ésimo elemento da iteracao
         aux = l->elementos[0];
         l->elementos[0] = l->elementos[i];
         l->elementos[i] = aux;
-        Heapify(l, i, 0);
+        Heapify(l, i, 0); // função com a ordenação 
     }
 }
