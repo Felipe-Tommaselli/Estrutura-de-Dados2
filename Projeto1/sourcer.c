@@ -10,61 +10,87 @@ Explicação projeto:  https://ae4.tidia-ae.usp.br/access/content/attachment/61c
 * Arquivo sourcer
 */
 
-
+// Include das bibiliotecas necessarias, incluindo o TAD
 #include "header.h"
 #include <stdio.h>
 #include <stdlib.h>
 
+// função que cria a lista (dinamicamente)
 void cria(list *l){
-    l->tamanho = 0; // inicia a lista com tamanho 0
-    l->elementos = malloc(sizeof(elem)*TAM); //inicia a lista dinamicamente com TAM elementos
+    // inicia a lista com tamanho nulo
+    l->tamanho = 0; 
+    // inicia a lista por alocaçaõ dinamica com o tamanho TAM 
+    l->elementos = malloc(sizeof(elem)*TAM); 
 }
 
-
+// função que destroi (liber ao espaco alocado dinamicamente)
 void destroi(list *l) {
-    free(l->elementos); // libera o espaço dinamico deixado para a lita
-    l->tamanho = 0; // volta o tamanho para 0
+    // libera o espaço dinamico deixado para a lista
+    free(l->elementos); 
+    // finaliza o tamanho para 0
+    l->tamanho = 0;
 }
 
-int insere(list *l, elem e){
+// função que insere os elementos dados no paraemtro na lista de forma aleatoria
+int insere(list *l, elem elemento){
+    // se a lista esta cheia retornamos erro
     if(l->tamanho == TAM)
-        return 1; // erro, lista cheia
-    l->elementos[l->tamanho] = e; //insere o elemento na ultima posição
-    l->tamanho++; // aumenta o tamanho da lista
-    return 0; // sucesso
+        return 1; 
+    //insere o elemento na ultima posição disponivel
+    l->elementos[l->tamanho] = elemento;
+    // aumenta o tamanho da lista para a achegada de um proximo elemento
+    l->tamanho++; 
+    return 0; 
 }
 
-int insere_crescente(list *l, elem e){
+// função que insere os elementos dados no paraemtro na lista de crescente
+int insere_crescente(list *l, elem elemento){
+    // se a lista esta cheia retornamos erro
     if(l->tamanho == TAM)
-        return 1; // erro, lista cheia
-    while(l->tamanho < e){
-        l->elementos[l->tamanho] = l->tamanho; //insere o elemento na ultima posição
-        l->tamanho++; // aumenta o tamanho da lista    
-        return 0; // sucesso
+        return 1; 
+    // loop iterando enquanto o tamanho for menor que o elemento passado
+    while(l->tamanho < elemento){
+        //insere o atual tamanho na ultima posição dsponivel
+        l->elementos[l->tamanho] = l->tamanho;
+        // aumenta o tamanho da lista para a achegada de um proximo elemento
+        l->tamanho++; 
+        return 0; 
     }
 }
 
-int insere_decrescente(list *l, elem e){
+// função que insere os elementos dados no paraemtro na lista de forma descrescente
+int insere_decrescente(list *l, elem elemento){
+    // se a lista esta cheia retornamos erro
     if(l->tamanho == TAM)
-        return 1; // erro, lista cheia
-    while(l->tamanho < e){
-        l->elementos[l->tamanho] = e - l->tamanho; //insere o elemento na ultima posição
-        l->tamanho++; // aumenta o tamanho da lista    
-        return 0; // sucesso
+        return 1; 
+    // loop iterando enquanto o tamanho for menor que o elemento passado
+    while(l->tamanho < elemento){
+        //insere a diferenca do elemento com o atual tamanho, na ultima posição dsponivel
+        l->elementos[l->tamanho] = elemento - l->tamanho;
+        // aumenta o tamanho da lista para a achegada de um proximo elemento
+        l->tamanho++; 
+        return 0; 
     }
 }
 
+// função que imprime na tela os elementos da lista
 void imprime(list *l) {
-    // Declarações
+    // declração e iniciação da varaivel do loop
     long i = 0;
     
+    // imprime ( ) se a lista estiver vazia
     if(l->tamanho == 0)
-        printf("( )\n"); // imprimir lista vazia
+        printf("( )\n");
+    // caso contrario, ou seja, lista com elementos
     else{
-        printf("("); // abre as chaves da lista
-        for(; i < l->tamanho-1; i++) // percorre cada elemento da lista
-            printf("%d, ", l->elementos[i]); // printa cada elemento um por um com a , 
-        printf("%d)\n", l->elementos[i]); // fecha as chaves
+        // abre chaves
+        printf("("); 
+        // percorre os elementos da lista
+        for(i; i < l->tamanho - 1; i++) // percorre cada elemento da lista
+            // printa cada elemento um por um com uma "," entre eles
+            printf("%d, ", l->elementos[i]); 
+         // fecha chaves
+        printf("%d)\n", l->elementos[i]);
     }
 }
 
@@ -174,7 +200,7 @@ void quicksort(list *l){
 /* 
 O radix sort é um algoritmo de ordenação rapido e estavel. 
 Ele possui complexidade linear no pior caso.
-Seu funcionamento é baseado na ordenaçação por meio dos algoritmos (digitos individuais), que
+Seu funcionamento é baseado na ordenaçação por meio dos algarismos (digitos individuais), que
 constituem a cadeira de caracteres que foram o numero na i-esima posicao a ser ordenado.
 Essa ordenacao é baseada por chaves unicas de indexação que garantem a ordenação final dos elementos 
 */
@@ -251,6 +277,16 @@ void radixsort(list *l){
 }
 
 //* HEAPSORT
+
+/*
+O heap sort é um algoritmo de ordenação por seleção, não estavel.
+Ele possui complexidade O(nlogn) no pior caso.
+Seu funcionamento é baseado na ordenaçação por meio de uma estrtura de dados chamada de heap.
+A heap pode ser representada por uma arvore binaria (ou por um vetor, mas menos intuitiva).
+Os elementos são inseridos na heap de forma que ao fim teremos o vetor ordenado, caso as proprie
+dades da heap sejam corretamente mantidas ao longo das inserções. A heap pode ser uma max heap 
+(ordena o vetor em ordem crescente) ou min heap (ordem descrescente).
+*/
 
 void Heapify(list *l,elem tam,int i){
     // Declaracoes

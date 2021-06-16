@@ -9,14 +9,23 @@ Explicação projeto:  https://ae4.tidia-ae.usp.br/access/content/attachment/61c
 * Arquivo header
 */
 
+// definir o tamanho da lista ser ordenada, ou seja, o tamanho da entrada
 #define TAM 100000001
 
-typedef int elem; // inicia o tipo elemento como int
+// tipo que sera usado nas listas do programa, desse modo não teriamos 
+// problemas em mudar essa tipagem depois do codigo pronto 
+typedef int elem;
 
+// define o struct list que sera o vetor a ser ordenado
 typedef struct{
+   // ponteiro elementos leva o elemento em si do vetor 
    elem *elementos; 
+   // tamanho carrega um long com o tamanho da lista
    long tamanho;
 } list;
+
+
+// Declarações de funções:
 
 void cria(list *l);
 void destroi(list *l);
