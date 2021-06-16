@@ -6,11 +6,10 @@ Gianluca Capezzuto Sardinha
 
 Explicação projeto:  https://ae4.tidia-ae.usp.br/access/content/attachment/61c65473-dfd7-45e0-9c5b-f83baa36b63d/Atividades/ecbb2c9d-24c5-4329-a2b2-84b2cdca1331/projeto_1.pdf
 
-
 * Arquivo header
 */
 
-#define TAM 11
+#define TAM 100000001
 
 typedef int elem; // inicia o tipo elemento como int
 

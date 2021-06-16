@@ -52,7 +52,7 @@ https://www.youtube.com/watch?v=6yCj-b3Gxls (min 58)
 * Exemplo:
 https://www.youtube.com/watch?v=6yCj-b3Gxls (1h)
 
-* começamos com h > 1, quando h chegar em 1, aplicamos uma inserção simples, ou seja, apenas ordemos o vetor para a inserção simples ser feita em um caso mais perto do linear
+* começamos com h > 1, quando h chegar em 1, aplicamos uma inserção simples (insertion sort é a mesma coisa que o shell sort só que para h = 1), ou seja, apenas ordemos o vetor para a inserção simples ser feita em um caso mais perto do linear
 
 * formula para chegar nos diferentes tamanhos de h:
     * o i-ésimo elemetno do j-ésimo conjunto é: x[(i - 1)*h + j - 1]

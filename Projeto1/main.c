@@ -35,19 +35,19 @@ int main(int argc, char *argv[]){
                 //insere_decrescente(&l, TAM);
                 //insere_crescente(&l, TAM);
 
-            printf("Original: "); imprime(&l); 
+            //printf("Original: "); imprime(&l); 
 
             // realiza a ordenação e calcula o tempo que demorou
             tempo_ini = clock(); // tempo inicial
             //bubblesort(&l);
             //bubblesort_aprimorado(&l);
-            //quicksort(&l);
+            quicksort(&l);
             //radixsort(&l);
-            heapsort(&l);
+            //heapsort(&l);
 
             soma_tempos += clock() - tempo_ini; // considera tempo decorrido desta rodada
 
-            printf("Ordenado: "); imprime(&l); // imprime apos ordenar
+            //printf("Ordenado: "); imprime(&l); // imprime apos ordenar
 
             destroi(&l); // apaga a lista
         }
