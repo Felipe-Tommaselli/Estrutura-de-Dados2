@@ -6,7 +6,6 @@ Gianluca Capezzuto Sardinha
 
 Explicação projeto:  https://ae4.tidia-ae.usp.br/access/content/attachment/61c65473-dfd7-45e0-9c5b-f83baa36b63d/Atividades/ecbb2c9d-24c5-4329-a2b2-84b2cdca1331/projeto_1.pdf
 
-
 * Arquivo sourcer
 */
 
@@ -95,6 +94,15 @@ void imprime(list *l) {
 }
 
 //* BUBBLESORT
+/* 
+O Bubble Sort é um algoritmo dos algoritmos de ordenação mais simples possíveis. 
+Ele possui complexidade quadrática no pior caso.
+Seu funcionamento baseia-se em percorrer o vetor muitas vezes, sendo que a cada passagem é feito a 
+movimentação do maior elemento para o topo da sequência, parecendo-se com uma bolha subindo num tanque d'água.
+Portanto, o algoritmo consiste em fazer comparações da posição atual com a próxima e, se a posição atual for maior
+que a seguinte, é realizada a troca dos valores nessa posição. Caso não seja necessária a troca é passado para o 
+próximo par de elementos do vetor a ser comparado.
+*/
 
 void bubblesort(list *l){
     // Declaracoes
@@ -106,9 +114,10 @@ void bubblesort(list *l){
     for(i = 0; i <= tam; i++){
         // loop pelas subsequencias possiveis de troca
        for(j = 0; j <= tam - i - 2; j++){
-           // condicao de troca
+           // condicao de troca citada na explicação da linha 103
            if(l->elementos[j] > l->elementos[j + 1]){
-               // troca
+               // o valor do próximo elemento é atribuído a uma varíavel auxiliar (elemento menor)
+               // e o elemento maior vai para a proxima posição do vetor, efetuando a troca.
                aux = l->elementos[j + 1];
                l->elementos[j+1] = l->elementos[j];
                l->elementos[j] = aux;
@@ -118,6 +127,12 @@ void bubblesort(list *l){
 }
 
 //* BUBBLESORT_APRIMORADO
+/* 
+O Bubble Sort aprimorado consiste na mesma ideia que o Bubble Sort normal. Porém,
+a grande diferença que o torna aprimorado é o caso de o vetor já estar ordenado, ou seja,
+minimizando o tempo de ordenação no melhor caso e isso é possível ser observado nas análises 
+empíricas para o melhor caso
+*/
 
 void bubblesort_aprimorado(list *l){
     // Declaracoes
@@ -135,25 +150,44 @@ void bubblesort_aprimorado(list *l){
                aux = l->elementos[j + 1];
                l->elementos[j+1] = l->elementos[j];
                l->elementos[j] = aux;
-               // ha troca de posicoes na lista
+               // ha troca de posicoes na lista, entao ordenado atribui um valor para continuar
+               // fazendo a troca de posições dos elementos.
                ordenado = 0;
            }
         }
-        // para se o vetor ja estiver ordenado
+        // se o vetor já estiver ordenado e pular a condicao de troca é indicado 
+        // que não há necessidade de continuar tentando ordenar o mesmo, por isso 
+        // há a parada no código
         if(ordenado == 1)
             break;
     }
 }
 
 //* QUICKSORT
+/* 
+O Quicksort é um algoritmo dos algoritmos de ordenação mais simples possíveis. 
+Ele possui complexidade quadrática no pior caso. Apesar do tempo de execução ser lento no pior caso, 
+este algoritmo é comumente usado como melhor opção para a ordenação.
+Dessa forma, é usado a ordenação por intercalação, baseando-se no conceito de dividir e conquistar: 
+--> Os elementos são particionados em dois subarranjos, os tais que são menores a um elemento i em específico
+ou maiores em relação a esse mesmo elemento. 
+    A[0,...,i-1] - A[i] - A[i+1,...,fim]
+Comumente, é usado o particionamento de lomuto, o qual seleciona i como sendo algum elemento dos extremos, 
+mas ao desenvolver do algoritmo foram encontradas soluções melhores que essa.
+--> Os dois subarranjos são ordenadas por chamadas recursivas ao algoritmo e assim, haverá um momento no qual
+será necessário ajustar apenas a posiçãi de i para que os elementos estejam ordenados.
+*/
 
 int particion(list *l, int ini, int fim){
-
+    // Declaracoes
     elem pivo = l->elementos[fim];
     int i = ini - 1, j = ini;
     elem aux;
 
+    // loop percorrendo o vetor inteiro 
     while(j <= fim - 1){
+        // caso o elemento seguinte ao inicial seja o menor que o pivo é passado uma posição a frente
+        // e assim feito a troca entre o inicial e o seu sucessor
         if(l->elementos[j] < pivo){
             i++;
             aux = l->elementos[i];
@@ -162,20 +196,28 @@ int particion(list *l, int ini, int fim){
         } 
         j++;
     }
+    // caso contrário, os elementos que são maiores ao pivo são trocados com os que estão no final, 
+    // garantindo a nossa intenção de dividir os elementos entre os menores - pivo - maiores
     aux = l->elementos[i + 1];
     l->elementos[i + 1] = l->elementos[fim];
     l->elementos[fim] = aux;
 
+    // é retornado o próximo elemento de i para a verificação de todos os elementos do vetor
     return i + 1;
 }
 
 int random_particion(list *l, int ini, int fim){
+    // declaração de varíaveis 
     int k =  ini + rand() % (fim - ini + 1);
+    // inicialmente, estavamos usando o tamanho da lista para randomizar a particao,
+    // mas percebemos que a cada passagem do vetor os elementos i e j vão se aproximando,
+    // portanto o vetor não fica constantemente com o mesmo tamanho de elementos a serem ordenados.
     // printf("l->tamanho: %ld\n", l->tamanho);
     // printf("fim - ini + 1: %d\n", fim - ini + 1);
 
     elem aux;
 
+    // troca entre o elemento aleatorio da particao para ser posicionado como pivo pelo particionamento de lomuto
     aux = l->elementos[k];
     l->elementos[k] = l->elementos[fim];
     l->elementos[fim] = aux;
@@ -184,7 +226,10 @@ int random_particion(list *l, int ini, int fim){
 }
 
 void quicksort_rec(list *l, int ini, int fim){
+    // declaracao de variaveis
     int pivo = 0;
+
+    // enquanto os elementos do inicio forem menores do que os do fim é chamado recursivamente esta funcao
     if(ini < fim){
         pivo = random_particion(l, ini, fim);
         quicksort_rec(l, ini, pivo - 1);
@@ -193,6 +238,7 @@ void quicksort_rec(list *l, int ini, int fim){
 }
 
 void quicksort(list *l){
+    // chamada recursiva para o quicksort
         quicksort_rec(l, 0, l->tamanho - 1);
 }
 
