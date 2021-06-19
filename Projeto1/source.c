@@ -312,7 +312,7 @@ void radixsort(list *l){
     for(int i = 0; i < tam; i++)
         // procura o maior elemento
         if (l->elementos[i] > maior)
-    	    // atrbui para maior o maior valor ate o momento
+    	    // atribui para maior o maior valor ate o momento
             maior = l->elementos[i];
     
     // loop enquanto maior for maior que pos
