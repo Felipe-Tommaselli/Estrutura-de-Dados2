@@ -26,7 +26,8 @@ int main(int argc, char *argv[]){
     int ordem, i, p; // variaveis para rodar no loop
     long j; // outra variavel para rodar no loop
     list l; // lista de elemetnos principal (declarado no header)
-    clock_t tempo_inicial, soma_tempos, dp[repeticoes] = {0}, dp_valor; // variaveis de medicao de tempo
+    clock_t tempo_inicial;  // variaveis de medicao de tempo
+    double dp[repeticoes] = {0}, dp_valor = 0, soma_tempos = 0; // variaveis para calculo do desvio padrao
     int entrada_pequena; // variavel para averiguar se vai ser possivel printar as entradas
     int alg = 0; // variavel para escolher o algoritmo de ordenacao
 
@@ -95,9 +96,10 @@ int main(int argc, char *argv[]){
                     heapsort(&l);
                     break;
             }
-            // soma tempos eh o tempo atual (apos a ordenacao), menos o tempo inicial, ou seja
-            // eh o tempo da decorrida para ordenacao de todaas as repeticoes acumuladas
-            dp[i] = clock() - tempo_inicial;
+            // o tempo de ordenacao eh o tempo atual (apos a ordenacao), menos o tempo inicial
+            // ou seja, eh o tempo da decorrida para ordenacao divido por clocks_per_sec, para
+            //converter o resultado armazenado no vetor em segundos
+            dp[i] = (double) (clock() - tempo_inicial) / CLOCKS_PER_SEC;
 
             // se a entrada eh "pequena" o vetor apos a ordenacao eh impresso na tela
             if(entrada_pequena == 1){
@@ -107,31 +109,34 @@ int main(int argc, char *argv[]){
             // apaga a lista, liberando todo o espaco alocado dinamicamente
             destroi(&l);
         }
-        printf("\n::::\n");
-        for(p = 0; p < repeticoes; p++){
-            printf("%li, ", dp[p]);
-            soma_tempos = soma_tempos + dp[p];
-            printf("(somatempos: %li)", soma_tempos);
-        }
-        printf("somatempos: %li", soma_tempos);
-        for(p = 0; p < repeticoes; p++)
-            dp[p] = pow((dp[p] - (soma_tempos / (double) repeticoes))/ CLOCKS_PER_SEC, 2);
 
+        // calculo do soma tempos
         for(p = 0; p < repeticoes; p++)
-            printf("\ndp[p]: %li", dp[p]);
+            soma_tempos = soma_tempos + dp[p];
+
+        // processo de calculo do desvio padrao, nessa parte é feita a diferenca entre o 
+        // valor e a media no loop, e posteriormente ele é eleveado ao quadrado  
+        for(p = 0; p < repeticoes; p++){
+            dp[p] = (dp[p] - (soma_tempos / (double) repeticoes));
+            dp[p] = pow(dp[p], 2);
+        }
+        // continuando o desvio padrao com o somatorio dos valores 
+        for(p = 0; p < repeticoes; p++)
             dp_valor += dp[p];
 
-        dp_valor = pow(dp_valor / repeticoes, (1/2));
+        // raiz quadrada dos valores obtidos, para terminar o desvio padrao para essa entrada
+        dp_valor = sqrt(dp_valor / (double) repeticoes);
 
         // Nesse momento para cada ordem de entrada feita eh impresso na tela o tempo de
         // ordenacao. Entre as repeticoes eh feita uma media para garantir valores consistentes.
         //  Por isso o valor do soma_tempos deve ser divido pelo numero de repeticoes.
-        // Alem disso, o valor do soma_tempos est em clocks do computador, o que nao eh um valor
-        // adequado apara analise, por isso dividimos ele por CLOCKS_PER_SEC. No fim teremos um
-        // valor em segundos para a media de tempo para uma dada entrada.
-        printf("\nEntrada: %0.0f   ", pow(10,ordem));
-        printf("Tempo total: %0.10f   ", (soma_tempos / (double) repeticoes) / CLOCKS_PER_SEC);
-        printf("Desvio padrao: %0.5li\n", dp_valor);
+        // Alem disso, o valor do soma_tempos e o do desvio padrao estava em clocks do computador,
+        // o que nao eh um valor adequado apara analise, por isso dividimos ele por CLOCKS_PER_SEC
+        // anteriormente. 
+        //No fim teremos um valor em segs para a media e o desvio padrao de tempo para cada entrada.
+        printf("\nEntrada: %0.0lf   ", pow(10,ordem));
+        printf("Tempo total: %0.10lf   ", (soma_tempos / (double) repeticoes));
+        printf("Desvio padrao: %0.5lf", dp_valor);
     }
     return 0;
 }
