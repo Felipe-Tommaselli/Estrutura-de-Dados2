@@ -10,7 +10,7 @@ Explicação projeto:  https://ae4.tidia-ae.usp.br/access/content/attachment/61c
 */
 
 // definir o tamanho da lista ser ordenada, ou seja, o tamanho da entrada
-#define TAM 101
+#define TAM 10000001
 
 // tipo que sera usado nas listas do programa, desse modo não teriamos 
 // problemas em mudar essa tipagem depois do codigo pronto 
