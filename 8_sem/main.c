@@ -12,16 +12,16 @@ int main(void) {
     clock_t tempo_ini, soma_tempos;
     
     //? considera listas de tamanhos cada vez maiores
-    for (int ordem = 1; pow(10,ordem) <= TAM; ordem++) {
+    for(int ordem = 1; pow(10,ordem) <= TAM; ordem++){
         soma_tempos = 0;
         //? faz varias rodadas independentes
-        for (int i = 0; i < repeticoes; i++) {
+        for(int i = 0; i < repeticoes; i++){
             //? nova lista
             cria(&l);
     
             //? insere elementos aleatorios 
-            for (long j = 0; j < pow(10,ordem); j++)
-                insere(&l, rand() % TAM);
+            for(long j = 0; j < pow(10,ordem); j++)
+                insere(&l, rand() % 100);
             
             //imprime(&l); //? imprime antes de ordenar
     
@@ -69,7 +69,7 @@ Entrada: 1000; Tempo total: 0.0046875000
 Entrada: 10000; Tempo total: 0.3671875000
 Entrada: 100000; Tempo total: 38.4828125000
 
-* Countingsort O():
+* Countingsort O(n) ou O(maior - menor + 1):
 Esse algoritmo é extremamente eficiente, porem quando aumentamos as entradas, tambem aumentamos
 a varaivao entre maior e menor numero (essa implementação feita) o que na vdd gasta mais tempo
 

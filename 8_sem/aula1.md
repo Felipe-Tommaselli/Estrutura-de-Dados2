@@ -1,5 +1,5 @@
-# Aula dia 22/06/2021
->**Analise de algoritmos e complexidade, mais exemplos**
+# Aula dia 18/06/2021
+>**Analise de algoritmos de ordenação e complexidade**
 
 ## Continuação Heapsort
 

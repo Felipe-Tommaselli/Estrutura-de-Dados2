@@ -1,4 +1,4 @@
-//* Aula 3 da 6 semana, insercao simples
+//* Aula 1 da 7 semana
 // mesmo projeto das priemrias aulas
 
 #define TAM 10000001

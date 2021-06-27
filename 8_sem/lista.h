@@ -1,7 +1,7 @@
-//* Aula 3 da 6 semana, insercao simples
+//* Aula 3 da 8 semana, insercao simples
 // mesmo projeto das priemrias aulas
 
-#define TAM 1000001
+#define TAM 1000000001
 
 typedef int elem;
 

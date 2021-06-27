@@ -1,5 +1,5 @@
 # Aula dia 15/06/2021
->**Analise de algoritmos e complexidade, mais exemplos**
+>**Analise de algoritmos de ordenação e complexidade, mais exemplos**
 
 ## Implementaçaõ shell sort
 
