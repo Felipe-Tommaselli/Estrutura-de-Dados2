@@ -78,7 +78,6 @@ int busca_sequencial_indexada(elem tabela[], int n, elem e, elemi tabela_i[], in
 }
 
 int busca_binaria_recursiva(elem tabela[], int inf, int sup, int e){
-
     int meio;
 
     if(inf >= sup) //busca invlida ou em vetor unitario
@@ -94,7 +93,39 @@ int busca_binaria_recursiva(elem tabela[], int inf, int sup, int e){
 }
 
 int busca_binaria(elem tabela[], int n, elem e){
+    // exemplo de tabela: {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1}
     return busca_binaria_recursiva(tabela, 0, n - 1, e);
+}
+
+int busca_binaria_iterativa(elem tabela[], int n, elem e){
+    // exmplo de tabela: {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1}
+
+    int inf = 0, sup = n - 1, meio;
+    meio = inf + (sup - inf)/2;
+
+    while(1){
+        // caso do vetor unitario
+        if(inf == sup && e == tabela[inf]){
+            meio = inf;
+            break;
+        }
+        // elemento achado ser o do meio, ou elemento nao encotnrado
+        if(e == tabela[meio] || inf >= sup)
+            break;
+        
+        //elemento a esquerda do atual meio
+        if(e < tabela[meio])
+            sup = meio - 1;
+
+        //elemento a direita do atual meio
+        if(e > tabela[meio])
+            inf = meio + 1;
+
+        //atualiza o meio
+        meio = inf + (sup - inf)/2;
+    }
+    //retorno meio para sucesso e -1 para erro 
+    return (e == tabela[meio]) ? meio : -1; 
 }
 
 int main(void){
@@ -102,7 +133,7 @@ int main(void){
     elem tabela[] =  {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1}; //tabela de valores
     int retorno, n = 10; //varaivel de retorno, e n para o num de valores da tabela
     int t = 3; // tamanho da tabela de indices da bsuca sequencial indexada
-    elem e = 9; // elemento a ser buscado
+    elem e = 6; // elemento a ser buscado
     elemi tabela_i[t]; //tabela de indices
 
     // cria tabela de indices
@@ -117,7 +148,8 @@ int main(void){
     //retorno = busca_sequencial_sentinela(tabela, n, e);
     //retorno = busca_sequencial_ordenada(tabela, n, e);
     //retorno = busca_sequencial_indexada(tabela, n, e, tabela_i, t);
-    retorno = busca_binaria(tabela, n, e);
+    //retorno = busca_binaria(tabela, n, e);
+    retorno = busca_binaria_iterativa(tabela, n, e);
 
     if(retorno != -1)
         printf("Elemento %d encontrado na posicao %d\n", e, retorno);

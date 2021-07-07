@@ -104,13 +104,44 @@ int busca_binaria_recursiva(elem tabela[], int inf, int sup, int e){
 }
 
 int busca_binaria(elem tabela[], int n, elem e){
+    // exemplo de tabela: {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1}
     return busca_binaria_recursiva(tabela, 0, n - 1, e);
+}
+
+int busca_binaria_iterativa(elem tabela[], int n, elem e){
+    // exmplo de tabela: {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1}
+
+    int inf = 0, sup = n - 1, meio;
+    meio = inf + (sup - inf)/2;
+
+    while(1){
+        // caso do vetor unitario
+        if(inf == sup && e == tabela[inf]){
+            meio = inf;
+            break;
+        }
+        // elemento achado ser o do meio, ou elemento nao encotnrado
+        if(e == tabela[meio] || inf >= sup)
+            break;
+        
+        //elemento a esquerda do atual meio
+        if(e < tabela[meio])
+            sup = meio - 1;
+
+        //elemento a direita do atual meio
+        if(e > tabela[meio])
+            inf = meio + 1;
+
+        //atualiza o meio
+        meio = inf + (sup - inf)/2;
+    }
+    //retorno meio para sucesso e -1 para erro 
+    return (e == tabela[meio]) ? meio : -1; 
 }
 
 //* BUSCA POR INTERPOLACAO
 
 int busca_por_interpolacao_rec(elem tabela[], int inf, int sup, int e){
-    // vetor com distribuicao uniforme: Exemplo: {0, 2, 4, 6, 8, 10}
     //! ACHO que fiz meio overkill, pq ele ta analisando tipo na busca binaria, mas ta 
     //! funcionando 0 bala ltgd, então ta suave (se pa da uma pesquisada nao faz mal)
 
@@ -131,7 +162,39 @@ int busca_por_interpolacao_rec(elem tabela[], int inf, int sup, int e){
 }
 
 int busca_por_interpolacao(elem tabela[], int n, elem e){
+    // vetor com distribuicao uniforme: Exemplo: {0, 2, 4, 6, 8, 10}
     return busca_por_interpolacao_rec(tabela, 0, n - 1, e);
+}
+
+int busca_por_interpolacao_iterativa(elem tabela[], int n, elem e){
+    // vetor com distribuicao uniforme: Exemplo: {0, 2, 4, 6, 8, 10}
+
+    int inf = 0, sup = n - 1, meio_interpol;
+    meio_interpol = inf + (sup - inf)*((e - tabela[inf]) / (tabela[sup] - tabela[inf]));
+
+    while(1){
+        // caso do vetor unitario
+        if(inf == sup && e == tabela[inf]){
+            meio_interpol = inf;
+            break;
+        }
+        // elemento achado ser o do meio, ou elemento nao encotnrado
+        if(e == tabela[meio_interpol] || inf >= sup)
+            break;
+        
+        //elemento a esquerda do atual meio
+        if(e < tabela[meio_interpol])
+            sup = meio_interpol - 1;
+
+        //elemento a direita do atual meio
+        if(e > tabela[meio_interpol])
+            inf = meio_interpol + 1;
+
+        //atualiza o meio pela interpolacao
+        meio_interpol = inf + (sup - inf)*((e - tabela[inf]) / (tabela[sup] - tabela[inf]));
+    }
+    //retorno meio para sucesso e -1 para erro 
+    return (e == tabela[meio_interpol]) ? meio_interpol : -1; 
 }
 
 //* FUNCAO MAIN 
@@ -141,7 +204,7 @@ int main(void){
     elem tabela[] =  {2, 4, 6, 8, 10}; //tabela de valores
     int retorno, n = 10; //varaivel de retorno, e n para o num de valores da tabela
     int t = 3; // tamanho da tabela de indices da bsuca sequencial indexada
-    elem e = 10; // elemento a ser buscado
+    elem e = 6; // elemento a ser buscado
     elemi tabela_i[t]; //tabela de indices
 
     // cria tabela de indices
@@ -157,7 +220,9 @@ int main(void){
     //retorno = busca_sequencial_ordenada(tabela, n, e);
     //retorno = busca_sequencial_indexada(tabela, n, e, tabela_i, t);
     //retorno = busca_binaria(tabela, n, e);
-    retorno = busca_por_interpolacao(tabela, n, e);
+    //retorno = busca_binaria_iterativa(tabela, n, e);
+    //retorno = busca_por_interpolacao(tabela, n, e);
+    retorno = busca_por_interpolacao_iterativa(tabela, n, e);
 
     if(retorno != -1)
         printf("Elemento %d encontrado na posicao %d\n", e, retorno);
