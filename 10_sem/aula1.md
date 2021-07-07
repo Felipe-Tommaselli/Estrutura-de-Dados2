@@ -101,3 +101,6 @@
 
 * Para montar o indice secundario é só refazer essa idea quase que recursivamente (raro exigir mais de 2 indices)
 
+### Complexidade
+
+* Mesma da busca senquencial: O(n), porem traz melhorias de desempenho
