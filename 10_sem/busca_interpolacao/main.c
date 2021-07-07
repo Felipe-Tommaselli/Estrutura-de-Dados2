@@ -111,6 +111,8 @@ int busca_binaria(elem tabela[], int n, elem e){
 
 int busca_por_interpolacao_rec(elem tabela[], int inf, int sup, int e){
     // vetor com distribuicao uniforme: Exemplo: {0, 2, 4, 6, 8, 10}
+    //! ACHO que fiz meio overkill, pq ele ta analisando tipo na busca binaria, mas ta 
+    //! funcionando 0 bala ltgd, então ta suave (se pa da uma pesquisada nao faz mal)
 
     int meio_interpol; 
 

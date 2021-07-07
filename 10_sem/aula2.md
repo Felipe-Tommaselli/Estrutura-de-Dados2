@@ -77,4 +77,12 @@
 
 ### Implementação
 
+* Feita já (pelo jeito em ED1 a gente vai ver isso bonitinho)
+
+### Complexidade
+
+* Complexidade depende do quanto a arvore esta balanceada
+    * Caso haja um grande desbalanceamento ela sera no pior caso O(n)
+    * Caso esteja balanceada algo perto de O(log n)
+
 
