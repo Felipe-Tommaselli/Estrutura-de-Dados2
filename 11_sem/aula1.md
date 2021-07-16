@@ -186,3 +186,6 @@ Soldagem linear: (re)hash de h(k,i) = (k + i) % B, com i = 0, ... B
 * Desvantagens 
     * Dificl achar funcoes hash que satisfaçam ao mesmo tempo criteiros de cobrir o maximo de indices da tabela e evitem agrupamentos de dados (no geral podemos usar o exemplo anterior)
     * Dificulta inserções e remoções [caracteristica do hashing fechado]
+
+> aula: https://youtu.be/_VtFboXVrlw
+> 1h e 12 ele mostra como o hashing funciona com overflow progressivo

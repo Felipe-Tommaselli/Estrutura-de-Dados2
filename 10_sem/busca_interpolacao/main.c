@@ -174,13 +174,12 @@ int busca_por_interpolacao_iterativa(elem tabela[], int n, elem e){
 
     while(1){
         // caso do vetor unitario
-        if(inf == sup && e == tabela[inf]){
-            meio_interpol = inf;
-            break;
-        }
+        if(inf == sup && e == tabela[inf])
+            return (e == tabela[meio_interpol]) ? inf : -1; 
+
         // elemento achado ser o do meio, ou elemento nao encotnrado
         if(e == tabela[meio_interpol] || inf >= sup)
-            break;
+            return (e == tabela[meio_interpol]) ? meio_interpol : -1; 
         
         //elemento a esquerda do atual meio
         if(e < tabela[meio_interpol])
@@ -193,8 +192,6 @@ int busca_por_interpolacao_iterativa(elem tabela[], int n, elem e){
         //atualiza o meio pela interpolacao
         meio_interpol = inf + (sup - inf)*((e - tabela[inf]) / (tabela[sup] - tabela[inf]));
     }
-    //retorno meio para sucesso e -1 para erro 
-    return (e == tabela[meio_interpol]) ? meio_interpol : -1; 
 }
 
 //* FUNCAO MAIN 

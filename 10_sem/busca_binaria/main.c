@@ -105,13 +105,12 @@ int busca_binaria_iterativa(elem tabela[], int n, elem e){
 
     while(1){
         // caso do vetor unitario
-        if(inf == sup && e == tabela[inf]){
-            meio = inf;
-            break;
-        }
+        if(inf == sup && e == tabela[inf])
+            return (e == tabela[meio]) ? inf : -1; 
+        
         // elemento achado ser o do meio, ou elemento nao encotnrado
         if(e == tabela[meio] || inf >= sup)
-            break;
+            return (e == tabela[meio]) ? meio : -1; 
         
         //elemento a esquerda do atual meio
         if(e < tabela[meio])
@@ -124,8 +123,6 @@ int busca_binaria_iterativa(elem tabela[], int n, elem e){
         //atualiza o meio
         meio = inf + (sup - inf)/2;
     }
-    //retorno meio para sucesso e -1 para erro 
-    return (e == tabela[meio]) ? meio : -1; 
 }
 
 int main(void){
@@ -133,7 +130,7 @@ int main(void){
     elem tabela[] =  {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1}; //tabela de valores
     int retorno, n = 10; //varaivel de retorno, e n para o num de valores da tabela
     int t = 3; // tamanho da tabela de indices da bsuca sequencial indexada
-    elem e = 6; // elemento a ser buscado
+    elem e = 33; // elemento a ser buscado
     elemi tabela_i[t]; //tabela de indices
 
     // cria tabela de indices
