@@ -28,7 +28,6 @@
 
 ### Complexidade
 
-
 (Hashing Estatico)
 
 * Hashing Fechado
@@ -42,3 +41,25 @@
     * Listas longas degradam o desempenho
         * Problema amenizadotrocando-se listas por arvores
     * Poucas colisoes implicam listas pequenas
+
+### Outras funções boas para Hashing
+
+> Tradicional: 
+* h(k) = (k*A % 1) % B, A uma constante entre 0 e 1, e B um numero primo
+    * (k*A % 1) recupera a parte fracionária de k * A
+    * Knuth sugere: A = (sqrt(5) - 1)/2 = 0.6180...
+
+> Hash universal
+
+* A função hash é escolhida aleatoriamente no inicio de cada execução, de forma que minimize tendencias das chaves
+
+* exemplo: h(k) = ((A*k + C)%P)%B => (h é chamado de coleção universal)
+    * P é um primo maior que a maior chave k (vale a pena superestimar)
+    * A é uma constante escolhida aleatoriamente de um conjunto de constatnes {0, 1, 2, ... P - 1}
+    * B é igual A só que comecã no 1: {1, 2, ... P - 1}
+    * B é um num primo indicando o tamanho da tabela
+
+### Desvantagens do Hashing
+
+* Principal desvantagem: Os elementos da tabela não são armazenados sequencialmente e nem sequer existe um medo prático para percorrê-los em sequência (arvore balanceada de bsuca faz isso)
+

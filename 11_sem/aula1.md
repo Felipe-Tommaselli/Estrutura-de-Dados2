@@ -111,7 +111,7 @@
     * Aberto 
         * PErmite armazenar um conjunto de informações de tamanho potencialmetne ilimtado
 
-* Tratamento de colisão:
+* Tratamento de colisão:  
 
 * Estatico
     * Fechado

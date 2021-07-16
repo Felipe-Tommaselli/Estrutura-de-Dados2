@@ -34,7 +34,7 @@ int inserir(hash *tabela, elem k){
         }
         if(tabela->vet[pos] == k)
             return -1; //erro, elemento repetido
-    }
+    }  
     return -1; // erro, tabela cheia
 }
 
