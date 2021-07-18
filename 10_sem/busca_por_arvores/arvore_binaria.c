@@ -81,6 +81,53 @@ int insere(Arvore *a, elem e){
     return insere_rec(&(a->raiz), e);
 }
 
+int remover_recursivo(No **p, elem e){
+    // p => No **
+    // *p => No *
+    // **p => No
+
+    No *aux;
+    int numFilhos = 0;
+    
+    if( *p == NULL)
+        return 1; // erro, elemento nao existente
+    if(( *p)->info == e){ //achou e deve remover
+        
+        if((*p)->esq != NULL)
+            numFilhos++;
+        if((*p)->dir != NULL)
+            numFilhos++;
+        
+        switch(numFilhos){
+            case 0: // nenhum filho
+                free( *p);
+                *p == NULL;
+                break;
+            case 1: // 1 filho
+                aux = *p;
+                *p = (( *p)->esq != NULL) ? ( *p)->esq : ( *p)->dir;
+                free(aux);
+                break;
+            case 2: // dois filhos
+            // acha substituto -- maior da esquerda
+            aux = (*p)->esq;
+            
+            while(aux->dir != NULL)
+                aux = aux->dir;
+
+            ( *p)->info = aux->info;
+            remover_recursivo(&(( *p)->esq), aux->info);
+        }
+        return 0;
+    }
+    // remove recursivamente da subarvore apropriada
+    return (e < (*p)->info) ? remover_recursivo(&(( *p)->esq), e) : remover_recursivo(&(( *p)-> dir), e); // sucesso
+}
+
+int remover(Arvore *a, elem e){
+    return remover_recursivo(&(a->raiz), e);
+}
+
 int main(void){
 
     Arvore a;
@@ -98,6 +145,10 @@ int main(void){
     for(i = 0; i < 100; i++)
         if(busca(&a, i) != NULL)
             printf("Achou o elemento: %d\n", i);
+
+    for(i = 0; i < 100; i++)
+        if(remover(&a, i) == 0)
+            printf("Removeu o elemento: %d\n", i);
 
     destroi(&a);
 
