@@ -110,7 +110,7 @@ int busca_binaria_iterativa(elem tabela[], int n, elem e){
         
         // elemento achado ser o do meio, ou elemento nao encotnrado
         if(e == tabela[meio] || inf >= sup)
-            return (e == tabela[meio]) ? meio : -1; 
+            return (e == tabela[meio]) ? meio : -1;
         
         //elemento a esquerda do atual meio
         if(e < tabela[meio])

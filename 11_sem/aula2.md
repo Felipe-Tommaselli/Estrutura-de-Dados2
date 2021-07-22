@@ -61,5 +61,5 @@
 
 ### Desvantagens do Hashing
 
-* Principal desvantagem: Os elementos da tabela não são armazenados sequencialmente e nem sequer existe um medo prático para percorrê-los em sequência (arvore balanceada de bsuca faz isso)
+* Principal desvantagem: Os elementos da tabela não são armazenados sequencialmente e nem sequer existe um modo prático para percorrê-los em sequência (arvore balanceada de bsuca faz isso)
 

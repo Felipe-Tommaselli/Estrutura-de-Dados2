@@ -71,7 +71,7 @@
 * Faz-se necessaria uma medida de qualidade
 
 * Exemplos: 
-    * Caixero vigiante (menor caminho entre todas as cidades)
+    * Caixero viajante (menor caminho entre todas as cidades)
     * Tradução automatica
     * Dimensõa intrínseca => Dimensão fractal de correlação D2
 

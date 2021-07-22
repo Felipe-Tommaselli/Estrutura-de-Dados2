@@ -3,13 +3,15 @@
 
 ## Ordenção por inserção
 
+* Aula: https://www.youtube.com/watch?v=6yCj-b3Gxls&list=PL4RGnfxCylxShF29_TxJHWs2oUEIKExCn&index=16
+
 * Inserir um dado element em sua posição correta em um subconjunto ja ordenado
 
 * 2 metodos princiapis
     * Inserção simples (direta)
     * Shell Sort (classificação de shell, ou classificação de incremento descrescente)
 
-## Inserção simples
+### Inserção simples
 
 * Ordenar o conjunto inserido os elementos em um subconjunto ja ordenado
 
@@ -29,7 +31,7 @@
 
     * A inserção simples é eficiente para arquivos "quase ordenados", estara mais perto do linear. Caso não seja possivel garantir isso, é melhor optar por um metodo mais "seguro"
 
-## Shell-sort
+### Shell-sort
 
 * Melhoria da inserção simples
 

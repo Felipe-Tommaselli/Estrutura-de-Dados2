@@ -14,7 +14,7 @@ int busca_sequencial(elem tabela[], int n, elem e){
         if(tabela[i] == e)
             break;
     
-    return (i == n) ?-1 : i;
+    return (i == n) ? -1 : i;
 }
 
 int busca_sequencial_sentinela(elem tabela[], int n, elem e){
