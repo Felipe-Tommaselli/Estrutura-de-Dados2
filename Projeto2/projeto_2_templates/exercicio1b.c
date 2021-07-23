@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+ 
 // Definição das variaveis que controlam a medição de tempo
 clock_t _ini, _fim;
 
@@ -9,6 +9,8 @@ clock_t _ini, _fim;
 unsigned char typedef bool;
 #define TRUE  1
 #define FALSE 0
+
+
 
 int* ler_inteiros(const char * arquivo, const int n)
 {
