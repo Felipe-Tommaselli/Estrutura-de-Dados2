@@ -10,8 +10,8 @@ unsigned char typedef bool;
 #define TRUE  1
 #define FALSE 0
 
-int* ler_inteiros(const char * arquivo, const int n)
-{
+int* ler_inteiros(const char * arquivo, const int n){
+    
     FILE* f = fopen(arquivo, "r");
 
     int * inteiros = (int *) malloc(sizeof(int) * n);
@@ -24,14 +24,14 @@ int* ler_inteiros(const char * arquivo, const int n)
     return inteiros;
 }
 
-void inicia_tempo()
-{
+void inicia_tempo(){
+    
     srand(time(NULL));
     _ini = clock();
 }
 
-double finaliza_tempo()
-{
+double finaliza_tempo(){
+    
     _fim = clock();
     return ((double) (_fim - _ini)) / CLOCKS_PER_SEC;
 }
@@ -47,8 +47,8 @@ int busca_sequencial(int entradas[], int n, int e){
     return (i == n) ? -1 : i;
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]){
+    
     const int N = 50000;
     unsigned encontrados = 0;
     
