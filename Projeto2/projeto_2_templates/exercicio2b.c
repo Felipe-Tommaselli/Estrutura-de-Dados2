@@ -123,7 +123,6 @@ int main(int argc, char const *argv[]){
     unsigned colisoes = 0;
     unsigned encontrados = 0;
 
-    int AA;
     string *insercoes = ler_strings("strings_entrada.txt", N);
     string *consultas = ler_strings("strings_busca.txt", M);
 

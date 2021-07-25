@@ -35,27 +35,38 @@ double finaliza_tempo(){
 }
 
 int busca_sequencial_mpf(int entradas[], int n, int e){
-    
-    int pos, aux, aux2, i;
 
-    for(pos = 0; pos < n; pos++)
-        if(entradas[pos] == e)
+    int pos, prox, ant, i;
+
+    // procura o elemento em todas as posições do vetor
+    for(pos = 0; pos < n; pos++) 
+        // testa se o elemento da posição atual é o elemento procurado de um por um
+        if(entradas[pos] == e) 
+            // para a busca segunrando a posição pos do elemento
             break;
 
-    if(pos != n){ // elemento encontrado
-        aux = entradas[pos];
-
-        for(i = 0; i < pos; i++)
-            entradas[i + 1] = entradas[i];
-        
-        entradas[0] = aux;
+    if(pos != n){ //elemento encontrado
+        // seta a posicao do primeiro ant
+        ant = entradas[0]; 
+        // roda ate a posicao do elemento encontrado
+        for(i = 0; i < pos; i++){
+            // guarda o proximo elemento que sera adiantado uma posicao
+            prox = entradas[i + 1];
+            // empurra os elementos ate o trocado uma posicao para frente
+            entradas[i + 1] = ant;
+            // atualiza o anterior com o elemento guardado 
+            ant = prox;
+        }
+        // move o elemento procurado para frente
+        entradas[0] = e;
     }
 
+    // retorna a posicao caso o elemento seja encontrado, cc retorna -1
     return (pos == n) ? -1 : pos;
 }
 
 int main(int argc, char const *argv[]){
-    /*
+    
     const int N = 50000;
     unsigned encontrados = 0;
 
@@ -65,24 +76,24 @@ int main(int argc, char const *argv[]){
     // realiza busca sequencia com realocação
     inicia_tempo();
     for (int i = 0; i < N; i++) {
+        if(busca_sequencial_mpf(entradas, N, consultas[i]) != -1)
+            encontrados++;
         // buscar o elemento consultas[i] na entrada
     }
     double tempo_busca = finaliza_tempo();
 
     printf("Tempo de busca    :\t%fs\n", tempo_busca);
     printf("Itens encontrados :\t%d\n", encontrados);
-    */
-    int entradas[4] = {9, 6, 4, 3};
-    int consultas[4] = {0, 0, 4, 0};
+    
+    /*
+    int entradas[5] = {9, 2, 6, 4, 3};
+    int consultas[5] = {3, 0, 2, 4, 0};
     int res;
-    for (int i = 0; i < 4; i++){
-        res = busca_sequencial_mpf(entradas, 4, consultas[i]);
+    for (int i = 0; i < 5; i++){
+        res = busca_sequencial_mpf(entradas, 5, consultas[i]);
         printf("\nres = %d", res);
         // buscar o elemento consultas[i] na entrada
     }
-    for (int i = 0; i < 4; i++){
-        printf("\nentradas[%d] = %d", i, entradas[i]);
-        // buscar o elemento consultas[i] na entrada
-    }
+    */
     return 0;
 }

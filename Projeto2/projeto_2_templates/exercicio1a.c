@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
- 
+
 // Definição das variaveis que controlam a medição de tempo
 clock_t _ini, _fim;
 
@@ -38,13 +38,17 @@ double finaliza_tempo(){
 
 int busca_sequencial(int entradas[], int n, int e){
     
-    int i;
+    int pos;
 
-    for(i = 0; i < n; i++)
-        if(entradas[i] == e)
+    // procura o elemento em todas as posições do vetor
+    for(pos = 0; pos < n; pos++) 
+        // testa se o elemento da posição atual é o elemento procurado de um por um
+        if(entradas[pos] == e) 
+            // para a busca segunrando a posição pos do elemento
             break;
     
-    return (i == n) ? -1 : i;
+    // retorna a posicao caso o elemento seja encontrado, cc retorna -1
+    return (pos == n) ? -1 : pos;
 }
 
 int main(int argc, char const *argv[]){

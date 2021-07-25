@@ -4,6 +4,7 @@
 #include <string.h> // funções strcmp e strcpy
 #include <math.h>
 
+
 // Definição das variaveis que controlam a medição de tempo
 clock_t _ini, _fim;
 
@@ -17,21 +18,25 @@ typedef char * string;
 
 #define MAX_STRING_LEN 20
 
+typedef struct{
+    string *v;
+} hash;
 
-unsigned converter(string s) {
-   unsigned h = 0;
-   for (int i = 0; s[i] != '\0'; i++) 
-      h = h * 256 + s[i];
-   return h;
+
+unsigned converter(string s){
+    unsigned h = 0;
+    for (int i = 0; s[i] != '\0'; i++) 
+        h = h * 256 + s[i];
+    return h;
 }
 
-string* ler_strings(const char * arquivo, const int n)
-{
+string* ler_strings(const char * arquivo, const int n){
+    
     FILE* f = fopen(arquivo, "r");
     
     string* strings = (string *) malloc(sizeof(string) * n);
 
-    for (int i = 0; !feof(f); i++) {
+    for (int i = 0; !feof(f); i++){
         strings[i] = (string) malloc(sizeof(char) * MAX_STRING_LEN);
         fscanf(f, "%s\n", strings[i]);
     }
@@ -41,32 +46,80 @@ string* ler_strings(const char * arquivo, const int n)
     return strings;
 }
 
-void inicia_tempo()
-{
+void inicia_tempo(){
+
     srand(time(NULL));
     _ini = clock();
 }
 
-double finaliza_tempo()
-{
+double finaliza_tempo(){
+
     _fim = clock();
     return ((double) (_fim - _ini)) / CLOCKS_PER_SEC;
 }
 
-unsigned h_div(unsigned x, unsigned i, unsigned B)
-{
+unsigned h_div(unsigned x, unsigned i, unsigned B){
     return ((x % B) + i) % B;
 }
 
-unsigned h_mul(unsigned x, unsigned i, unsigned B)
-{
+unsigned h_mul(unsigned x, unsigned i, unsigned B){
     const double A = 0.6180;
     return  ((int) ((fmod(x * A, 1) * B) + i)) % B;
 }
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-int main(int argc, char const *argv[])
-{
+void criar(hash *tabela, unsigned B){
+    int i;
+
+    tabela->v = calloc(B, sizeof(string));
+    for (i = 0; i < B; i++){
+        tabela->v[i] = NULL;
+    }
+}
+
+int inserir(string x, unsigned B, hash *tabela){
+    unsigned pos, i, aux, aux1;
+
+    aux = converter(x);
+
+    for (i = 0; i < B; i++)
+    {
+    pos = h(aux, i, B);
+
+    if (tabela->v[pos] == NULL){
+        tabela->v[pos] = calloc(MAX_STRING_LEN, sizeof(string));
+        strcpy(tabela->v[pos], x);
+        return pos;
+    }
+    if (!strcmp(tabela->v[pos], x))
+        return -1;
+    }
+    return -1;
+}
+
+int buscar(string x, unsigned B, hash *tabela){
+    
+    unsigned pos, i, aux;
+
+    aux = converter(x);
+    int AA;
+    for (i = 0; i < B; i++){
+
+        pos = h(aux, i, B);
+
+        tabela->v[pos] = calloc(MAX_STRING_LEN, sizeof(string));
+
+        if (strcmp(tabela->v[pos], x))
+            return pos;
+        if (tabela->v[pos] == NULL)
+            return -1;
+    }
+    return -1;
+}
+
+int main(int argc, char const *argv[]){
+
     unsigned N = 50000;
     unsigned M = 70000;
     unsigned B = 150001;
@@ -80,13 +133,16 @@ int main(int argc, char const *argv[])
     string* insercoes = ler_strings("strings_entrada.txt", N);
     string* consultas = ler_strings("strings_busca.txt", M);
 
-
+    hash tabela;
     // cria tabela hash com hash por divisão
+    criar(&tabela, B);
 
     // inserção dos dados na tabela hash usando hash por divisão
     inicia_tempo();
     for (int i = 0; i < N; i++) {
         // inserir insercoes[i] na tabela hash
+        if(inserir(insercoes[i], B, &tabela) != -1) // inserir insercoes[i] na tabela hash
+            colisoes++;
     }
     double tempo_insercao_h_div = finaliza_tempo();
 
@@ -94,6 +150,8 @@ int main(int argc, char const *argv[])
     inicia_tempo();
     for (int i = 0; i < M; i++) {
         // buscar consultas[i] na tabela hash
+        if(buscar(insercoes[i], B, &tabela) != -1) // buscar consultas[i] na tabela hash
+            encontrados++;
     }
     double tempo_busca_h_div = finaliza_tempo();
 
