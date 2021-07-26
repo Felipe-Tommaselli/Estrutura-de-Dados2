@@ -38,8 +38,9 @@ double finaliza_tempo(){
 
 int busca_sequencial(int entradas[], int n, int e){
     
-    int pos;
-
+    // iterador que conterá a posicao do elemento e procurado, caso seja encontrado 
+    int pos; 
+    
     // procura o elemento em todas as posições do vetor
     for(pos = 0; pos < n; pos++) 
         // testa se o elemento da posição atual é o elemento procurado de um por um

@@ -36,7 +36,13 @@ double finaliza_tempo(){
 
 int busca_sequencial_mpf(int entradas[], int n, int e){
 
-    int pos, prox, ant, i;
+    // iterador que conterá a posicao do elemento e procurado, caso seja encontrado 
+    int pos;
+    // variaveis que armazenam a posicao anterior e proxima durante a movimentacao de 
+    // elementos para frente, funcionam como um carry que vai sendo atualizado a cada iteracao
+    int prox, ant;
+    // iterador auxiliar
+    int i;
 
     // procura o elemento em todas as posições do vetor
     for(pos = 0; pos < n; pos++) 
@@ -84,16 +90,6 @@ int main(int argc, char const *argv[]){
 
     printf("Tempo de busca    :\t%fs\n", tempo_busca);
     printf("Itens encontrados :\t%d\n", encontrados);
-    
-    /*
-    int entradas[5] = {9, 2, 6, 4, 3};
-    int consultas[5] = {3, 0, 2, 4, 0};
-    int res;
-    for (int i = 0; i < 5; i++){
-        res = busca_sequencial_mpf(entradas, 5, consultas[i]);
-        printf("\nres = %d", res);
-        // buscar o elemento consultas[i] na entrada
-    }
-    */
+
     return 0;
 }

@@ -45,7 +45,7 @@ void ordena_entrada(int entradas[], long ini, long fim){
     long i, j;
     int aux;
 
-    // faz particionamento
+    // particionamento
     i = ini;
     for(j = ini; j < fim; j++){
         // compara com o pivo
@@ -54,7 +54,7 @@ void ordena_entrada(int entradas[], long ini, long fim){
             aux = entradas[j];
             entradas[j] = entradas[i];
             entradas[i] = aux;
-            i++; // achpou novo elemento menor que o pivo
+            i++; // achou novo elemento menor que o pivo
         }
     }
     // reposiciona o pivo, ou seja, troca elementos das posicoes i e fim
@@ -71,41 +71,31 @@ void ordena_entrada(int entradas[], long ini, long fim){
 
 int busca_sequencial_index(int entradas[], index tabela_index[], int n, int n_index, int e){
 
-    int i;
+    int i; // iterador que marca a posição do elemento procurado
 
-    int A;
-
-
-    // busca sequencial no indice
-    for(i = 0; i < n_index && e > tabela_index[i].kindex; i++); 
+    // posiciona i no intervalo que e esta contido na tabela de indice 
+    for(i = 0; i < n && e > tabela_index[i].kindex; i++); 
     
     // caso elemento buscado menor ou igual ao primeiro
     if(i == 0)
         if(e == tabela_index[i].kindex)
             return i;
 
-    // varre tabela de dados
+    // varre a entrada a partir do posicionamento de i feito pela comparacao com a
+    // tabela de indices, ate achar e, ou acabar o vetor 
     for(i = tabela_index[i - 1].pos; i < n && e > entradas[i]; i++);
-
-    //! Não ta funcionado, o i ta dando diferente do e
-    printf("\ni: %d\ne: %d\n", i, e);
+    
+    // caso que o elemento foi encontrado, retorna a sua posição i
     if(i < n && e == entradas[i])
         return i;
 
-    scanf("\n>>> %d", &A);
-    printf("\nentradas[10] = %d", entradas[10000]);
-    printf("\ntabela_index[10] = %d", tabela_index[1].kindex);
-    printf("\nn = %d", n);
-    printf("\nn_index = %d", n_index);
-
+    // elemento não encontrado
     return -1;
-    
 }
 
 
 int main(int argc, char const *argv[]){
 
-    
     const int N = 50000;
     const int index_size = 10000;
     unsigned encontrados = 0;
@@ -120,35 +110,17 @@ int main(int argc, char const *argv[]){
     // ordenar entrada
     ordena_entrada(entradas, 0, N - 1);
     
-    // criar tabela de indice
-
-    /*
     // realizar consultas na tabela de indices 
     inicia_tempo();
     for (int i = 0; i < N; i++) {
+        if(busca_sequencial_index(entradas, tabela_index, N, N/index_size, consultas[i]) != -1)
+            encontrados++;
         // buscar o elemento consultas[i] na entrada
     }
     double tempo_busca = finaliza_tempo();
 
     printf("Tempo de busca    :\t%fs\n", tempo_busca);
     printf("Itens encontrados :\t%d\n", encontrados);
-    */
-
-    // cria tabela de indices
-    for(int i = 0; i < N/index_size; i++){
-        // identificar e guardar a posicao
-        tabela_index[i].pos = i*(index_size); //i = 0,1,2 ...     
-        // guardar o valor
-        tabela_index[i].kindex = entradas[tabela_index[i].pos];
-    }
-
-    int res;
-    for (int i = 0; i < 5; i++){
-        res = busca_sequencial_index(entradas, tabela_index, 5, N/index_size, consultas[i]);
-        printf("\nres = %d", res);
-        // buscar o elemento consultas[i] na entrada
-    }
-    
 
     return 0;
 }
