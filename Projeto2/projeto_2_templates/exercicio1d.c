@@ -7,7 +7,7 @@ clock_t _ini, _fim;
 
 // indice da bsuca sequencial indexada
 typedef struct{
-    elem kindex;
+    int kindex;
     int pos;
 } index;
 
@@ -69,12 +69,15 @@ void ordena_entrada(int entradas[], long ini, long fim){
         ordena_entrada(entradas, i + 1, fim);
 }
 
-void cria_lista_kindex(int entradas[], int tabela_index[], int n, int n_index, int e){
-    // tabela de valores exemplo: {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1};
+int busca_sequencial_index(int entradas[], index tabela_index[], int n, int n_index, int e){
+
     int i;
 
+    int A;
+
+
     // busca sequencial no indice
-    for(i = 0; i < n_index && tabela_index[i].kindex; i++); 
+    for(i = 0; i < n_index && e > tabela_index[i].kindex; i++); 
     
     // caso elemento buscado menor ou igual ao primeiro
     if(i == 0)
@@ -85,19 +88,20 @@ void cria_lista_kindex(int entradas[], int tabela_index[], int n, int n_index, i
     for(i = tabela_index[i - 1].pos; i < n && e > entradas[i]; i++);
 
     //! Não ta funcionado, o i ta dando diferente do e
-    printf("i: %d\ne: %d\n", i, e);
+    printf("\ni: %d\ne: %d\n", i, e);
     if(i < n && e == entradas[i])
         return i;
+
+    scanf("\n>>> %d", &A);
+    printf("\nentradas[10] = %d", entradas[10000]);
+    printf("\ntabela_index[10] = %d", tabela_index[1].kindex);
+    printf("\nn = %d", n);
+    printf("\nn_index = %d", n_index);
 
     return -1;
     
 }
 
-
-int busca_sequencial_index(){
-
-    return 0;
-}
 
 int main(int argc, char const *argv[]){
 
@@ -133,14 +137,14 @@ int main(int argc, char const *argv[]){
     // cria tabela de indices
     for(int i = 0; i < N/index_size; i++){
         // identificar e guardar a posicao
-        tabela_index[i].pos = i*(n/N/index_size); //i = 0,1,2 ...     
+        tabela_index[i].pos = i*(index_size); //i = 0,1,2 ...     
         // guardar o valor
-        tabela_index[i].kindex = tabela_index[tabela_index[i].pos];
+        tabela_index[i].kindex = entradas[tabela_index[i].pos];
     }
 
     int res;
-    for (int i = 0; i < 50; i++){
-        res = busca_sequencial_index(entradas, tabela_index, 5, N/index_size,consultas[i]);
+    for (int i = 0; i < 5; i++){
+        res = busca_sequencial_index(entradas, tabela_index, 5, N/index_size, consultas[i]);
         printf("\nres = %d", res);
         // buscar o elemento consultas[i] na entrada
     }
