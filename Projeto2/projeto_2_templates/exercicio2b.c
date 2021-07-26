@@ -19,8 +19,9 @@ typedef char *string;
 
 #define MAX_STRING_LEN 20
 
+// struct com vetor de strings 
 typedef struct{
-  string *v;
+    string vet[150001]; // vetor com B elementos, sendo B = 150001
 } hash;
 
 unsigned converter(string s){
@@ -68,51 +69,68 @@ unsigned h_mul(unsigned x, unsigned i, unsigned B){
 void criar(hash *tabela, unsigned B){
     int i;
 
-    tabela->v = calloc(B, sizeof(string));
-    for (i = 0; i < B; i++){
-        tabela->v[i] = NULL;
-    }
+    tabela->vet = calloc(B, sizeof(string));
+
+    for(i = 0; i < B; i++)
+        tabela->vet[i] = NULL;
 }
 
-int inserir(string x, unsigned B, hash *tabela)
-{
-    unsigned pos, i, aux, aux1;
+int inserir(hash *tabela, unsigned B, string e){
+    unsigned pos, i, aux;
 
-    aux = converter(x);
+    aux = converter(e);
 
-    for (i = 0; i < B; i++)
-    {
-    pos = h(aux, i, B);
+    for(i = 0; i < B; i++){
 
-    if (tabela->v[pos] == NULL){
-        tabela->v[pos] = calloc(MAX_STRING_LEN, sizeof(string));
-        strcpy(tabela->v[pos], x);
-        return pos;
-    }
-    if (!strcmp(tabela->v[pos], x))
-        return -1;
+        pos = h(aux, i, B); //! implementar hashing duplo
+
+        if(tabela->vet[pos] == NULL){
+            strcpy(tabela->vet[pos], e);
+            return pos;
+        }
+        if(strcmp(tabela->vet[pos], e) == 0){
+            printf("Elemento repetido na posicao %d", pos);
+            return -1;
+        }
     }
     return -1;
 }
 
-int buscar(string x, unsigned B, hash *tabela)
-{
+int buscar(hash *tabela, unsigned B, string e){
     unsigned pos, i, aux;
 
-    aux = converter(x);
-    int AA;
+    aux = converter(e);
+
     for (i = 0; i < B; i++){
 
         pos = h(aux, i, B);
 
-        tabela->v[pos] = calloc(MAX_STRING_LEN, sizeof(string));
-
-        if (strcmp(tabela->v[pos], x))
+        if(strcmp(tabela->vet[pos], e) == 0)
             return pos;
-        if (tabela->v[pos] == NULL)
+        if(tabela->vet[pos] == NULL)
             return -1;
     }
     return -1;
+}
+
+int busca_sequencial(string x, int n, string insercoes[]){
+    
+    // iterador que conterá a posicao do elemento e procurado, caso seja encontrado 
+    unsigned pos, aux;
+
+    aux = converter(x);
+    
+    // procura o elemento em todas as posições do vetor
+    for(pos = 0; pos < n; pos++) 
+        // testa se o elemento da posição atual é o elemento procurado de um por um
+        if(strcmp(x, insercoes[pos]) == 0){
+            printf("%s == %s, posicao = %d\n", x, insercoes[pos], pos);
+            break;
+        }
+            // para a busca segunrando a posição pos do elemento
+    
+    // retorna a posicao caso o elemento seja encontrado, cc retorna -1
+    return (pos == n) ? -1 : pos;
 }
 
 int main(int argc, char const *argv[]){
@@ -133,24 +151,19 @@ int main(int argc, char const *argv[]){
 
     // inserção dos dados na tabela hash
     inicia_tempo();
-    for (int i = 0; i < N; i++){
-        if(inserir(insercoes[i], B, &tabela) != -1) // inserir insercoes[i] na tabela hash
+    for (int i = 0; i < N; i++){ //! rever a questão dos elementos repetidos
+        if(inserir(&tabela, B, insercoes[i]) != -1) // inserir insercoes[i] na tabela hash
             colisoes++;
     }
-
-    printf(">>>>>>>>1<<<<<<<<<<");
-    for (int i = 0; i < 10; i++){
-        printf("tabela[%d] = %d", i, &tabela[i]);
-    }
-    scanf("%d", &AA);
     double tempo_insercao = finaliza_tempo();
     
     // busca dos dados na tabela hash
     inicia_tempo();
-    for (int i = 0; i < N; i++){
-        if(buscar(insercoes[i], B, &tabela) != -1) // buscar consultas[i] na tabela hash
+    for (int i = 0; i < N; i++){ //! rever a questão dos elementos repetidos
+        if(buscar(&tabela, B, consultas[i]) != -1) // buscar consultas[i] na tabela hash
             encontrados++;
     }
+    // itens encontrados: 27411
     double tempo_busca = finaliza_tempo();
 
 
