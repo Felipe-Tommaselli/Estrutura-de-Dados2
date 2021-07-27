@@ -5,6 +5,13 @@
 #include <string.h>
 #include <math.h>
 #define h(x, i, B) (h_mul(x, i, B) + i * h_div(x, i, B)) % B
+#define typeof(var) _Generic( (var),\
+char: "Char",\
+int: "Integer",\
+float: "Float",\
+char *: "String",\
+void *: "Pointer",\
+default: "Undefined")
 
 // Definição das variaveis que controlam a medição de tempo
 clock_t _ini, _fim;
@@ -70,34 +77,33 @@ unsigned h_mul(unsigned x, unsigned i, unsigned B){
 void criar(hash *tabela, unsigned B){
     int i;
 
-    printf("\n>>> criar");
-    
-    tabela->vet = calloc(B, sizeof(string));
+    tabela->vet = (string *) calloc(B, sizeof(string));
 
     for(i = 0; i < B; i++){
-        tabela->vet[i] = "";
-        //printf("\ntabela[%d] = %s", i, tabela->vet[i]);
+        tabela->vet[i] = "-";
+        // printf("\ntabela[%d] = %s", i, tabela->vet[i]);
     }
 }
 
 // inserir(&tabela, B, insercoes[i]) != -1
 int inserir(hash *tabela, unsigned B, string e){
-
+    
     int pos, i, aux;
-    // tabela->vet = calloc(B, sizeof(string));
 
     aux = converter(e);
-
+    
     for(i = 0; i < B; i++){
 
         pos = h(aux, i, B); //! implementar hashing duplo
 
-        if(tabela->vet[pos] == " "){ //!!!!!!!!! nao funciona com ""
+        if(((int) strcmp(tabela->vet[pos], "-")) == 0){ 
+            tabela->vet[pos] = calloc(MAX_STRING_LEN, sizeof(string));
             strcpy(tabela->vet[pos], e);
             return pos;
         }
+        
         if(strcmp(tabela->vet[pos], e) == 0){
-            printf("Elemento repetido na posicao %d", pos);
+            // printf("Elemento repetido na posicao %d", pos);
             return -1;
         }
     }
@@ -107,7 +113,7 @@ int inserir(hash *tabela, unsigned B, string e){
 int buscar(hash *tabela, unsigned B, string e){
     unsigned pos, i, aux;
 
-    printf("\n>>> buscar");
+    printf(" e = %s", e);
 
     aux = converter(e);
 
@@ -157,6 +163,7 @@ int main(int argc, char const *argv[]){
     hash tabela;
     
     // cria tabela hash com hash por hash duplo
+    printf("\ncomeco criar");    
     criar(&tabela, B);
     printf("\nfim criar");
     // inserção dos dados na tabela hash
@@ -164,28 +171,28 @@ int main(int argc, char const *argv[]){
     inicia_tempo();
 
     printf("\ncomeco insercao");
-
-    for (int i = 0; i < N; i++){ //! rever a questão dos elementos repetidos
-        // printf("\ninsercoes[%d] = %s", i, insercoes[i]);
-        if(inserir(&tabela, B, insercoes[i]) != -1) // inserir insercoes[i] na tabela hash
+    for (int i = 0; i < N; i++) //! rever a questão dos elementos repetidos
+        if(inserir(&tabela, B, insercoes[i]) > 0) // inserir insercoes[i] na tabela hash
             colisoes++;
-    }
     printf("\nfim insercao");
+    
 
     double tempo_insercao = finaliza_tempo();
     
     // busca dos dados na tabela hash
     inicia_tempo();
-    for (int i = 0; i < N; i++){ //! rever a questão dos elementos repetidos
-        if(buscar(&tabela, B, consultas[i]) != -1) // buscar consultas[i] na tabela hash
+    printf("\ncomeco busca");
+    for (int i = 0; i < M; i++){ //! rever a questão dos elementos repetidos
+        printf("\ni = %d", i);
+        if(buscar(consultas[i], B, insercoes) != -1) // buscar consultas[i] na tabela hash
             encontrados++;
     }
     // itens encontrados: 27411
     double tempo_busca = finaliza_tempo();
 
 
-    printf("Colisões na inserção: %d\n", colisoes);
-    printf("Tempo de inserção   : %fs\n", tempo_insercao);
+    printf("Colisoes na insercao: %d\n", colisoes);
+    printf("Tempo de insercao   : %fs\n", tempo_insercao);
     printf("Tempo de busca      : %fs\n", tempo_busca);
     printf("Itens encontrados   : %d\n", encontrados);
 
