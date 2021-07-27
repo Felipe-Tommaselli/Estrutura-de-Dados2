@@ -21,7 +21,8 @@ typedef char *string;
 
 // struct com vetor de strings 
 typedef struct{
-    string vet[150001]; // vetor com B elementos, sendo B = 150001
+    string *vet; // vetor com B elementos, sendo B = 150001
+    // string vet[150001];
 } hash;
 
 unsigned converter(string s){
@@ -69,14 +70,21 @@ unsigned h_mul(unsigned x, unsigned i, unsigned B){
 void criar(hash *tabela, unsigned B){
     int i;
 
+    printf("\n>>> criar");
+    
     tabela->vet = calloc(B, sizeof(string));
 
-    for(i = 0; i < B; i++)
-        tabela->vet[i] = NULL;
+    for(i = 0; i < B; i++){
+        tabela->vet[i] = "";
+        //printf("\ntabela[%d] = %s", i, tabela->vet[i]);
+    }
 }
 
+// inserir(&tabela, B, insercoes[i]) != -1
 int inserir(hash *tabela, unsigned B, string e){
-    unsigned pos, i, aux;
+
+    int pos, i, aux;
+    // tabela->vet = calloc(B, sizeof(string));
 
     aux = converter(e);
 
@@ -84,7 +92,7 @@ int inserir(hash *tabela, unsigned B, string e){
 
         pos = h(aux, i, B); //! implementar hashing duplo
 
-        if(tabela->vet[pos] == NULL){
+        if(tabela->vet[pos] == " "){ //!!!!!!!!! nao funciona com ""
             strcpy(tabela->vet[pos], e);
             return pos;
         }
@@ -99,6 +107,8 @@ int inserir(hash *tabela, unsigned B, string e){
 int buscar(hash *tabela, unsigned B, string e){
     unsigned pos, i, aux;
 
+    printf("\n>>> buscar");
+
     aux = converter(e);
 
     for (i = 0; i < B; i++){
@@ -107,7 +117,7 @@ int buscar(hash *tabela, unsigned B, string e){
 
         if(strcmp(tabela->vet[pos], e) == 0)
             return pos;
-        if(tabela->vet[pos] == NULL)
+        if(tabela->vet[pos] == "")
             return -1;
     }
     return -1;
@@ -145,16 +155,23 @@ int main(int argc, char const *argv[]){
     string *consultas = ler_strings("strings_busca.txt", M);
 
     hash tabela;
-
+    
     // cria tabela hash com hash por hash duplo
     criar(&tabela, B);
-
+    printf("\nfim criar");
     // inserção dos dados na tabela hash
+    
     inicia_tempo();
+
+    printf("\ncomeco insercao");
+
     for (int i = 0; i < N; i++){ //! rever a questão dos elementos repetidos
+        // printf("\ninsercoes[%d] = %s", i, insercoes[i]);
         if(inserir(&tabela, B, insercoes[i]) != -1) // inserir insercoes[i] na tabela hash
             colisoes++;
     }
+    printf("\nfim insercao");
+
     double tempo_insercao = finaliza_tempo();
     
     // busca dos dados na tabela hash
