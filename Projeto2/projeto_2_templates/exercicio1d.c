@@ -103,27 +103,28 @@ int main(int argc, char const *argv[]){
     
     int* entradas = ler_inteiros("inteiros_entrada.txt", N);
     int* consultas = ler_inteiros("inteiros_busca.txt", N);
-    //int* tabela_index = calloc(N/index_size, sizeof(int));
 
+    // declara a tabela de index com o tamanho estipulado: (N/index_size)
     index tabela_index[N/index_size];
 
     // ordenar entrada
     ordena_entrada(entradas, 0, N - 1);
 
-    // cria tabela de indices
+    // criacao da tabela de indices
+    // iteracoes ate o tamanho estipulado para a tabela de indices: (N/index_size)
     for(int i = 0; i < (N/index_size); i++){
-        // identificar e guardar a posicao
+        // identifica e guarda a posicao i
         tabela_index[i].pos = i*(index_size); //i = 0,1,2 ...     
-        // guardar o valor
+        // guarda o valor na tabela de indice
         tabela_index[i].kindex = entradas[tabela_index[i].pos];
     }
     
     // realizar consultas na tabela de indices 
     inicia_tempo();
     for (int i = 0; i < N; i++) {
+        // se a busca for bem sucedida, encontrados é incrementado
         if(busca_sequencial_index(entradas, tabela_index, N, N/index_size, consultas[i]) != -1)
             encontrados++;
-        // buscar o elemento consultas[i] na entrada
     }
     double tempo_busca = finaliza_tempo();
 

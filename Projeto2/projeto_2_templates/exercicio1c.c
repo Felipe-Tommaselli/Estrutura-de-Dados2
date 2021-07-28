@@ -41,6 +41,8 @@ int busca_sequencial_trans(int entradas[], int n, int e){
     for(pos = 0; pos < n; pos++) 
         // testa se o elemento da posição atual é o elemento procurado de um por um
         if(entradas[pos] == e){
+            // troca o elemento procurado na posicao pos com o elemento anterior
+            // (joga os elementos porcurados para o comeco do vetor de um em um)
             aux = entradas[pos];
             entradas[pos] = entradas[pos - 1];
             entradas[pos - 1] = aux;
@@ -61,9 +63,9 @@ int main(int argc, char const *argv[]){
     // realiza busca sequencia com realocação
     inicia_tempo();
     for (int i = 0; i < N; i++) {
+        // se a busca for bem sucedida, encontrados é incrementado
         if(busca_sequencial_trans(entradas, N, consultas[i]) != -1)
             encontrados++;
-        // buscar o elemento consultas[i] na entrada
     }
     double tempo_busca = finaliza_tempo();
 

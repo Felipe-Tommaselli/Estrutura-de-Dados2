@@ -65,9 +65,9 @@ int main(int argc, char const *argv[]){
     // realiza busca sequencial
     inicia_tempo();
     for (int i = 0; i < N; i++)
+        // se a busca for bem sucedida, encontrados é incrementado
         if(busca_sequencial(entradas, N, consultas[i]) != -1) 
             encontrados++;
-        // buscar o elemento consultas[i] na entrada
     
     double tempo_busca = finaliza_tempo();
     
