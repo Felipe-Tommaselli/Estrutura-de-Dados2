@@ -109,6 +109,14 @@ int main(int argc, char const *argv[]){
 
     // ordenar entrada
     ordena_entrada(entradas, 0, N - 1);
+
+    // cria tabela de indices
+    for(int i = 0; i < (N/index_size); i++){
+        // identificar e guardar a posicao
+        tabela_index[i].pos = i*(index_size); //i = 0,1,2 ...     
+        // guardar o valor
+        tabela_index[i].kindex = entradas[tabela_index[i].pos];
+    }
     
     // realizar consultas na tabela de indices 
     inicia_tempo();
