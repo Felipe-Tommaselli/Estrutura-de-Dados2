@@ -5,13 +5,6 @@
 #include <string.h>
 #include <math.h>
 #define h(x, i, B) (h_mul(x, i, B) + i * h_div(x, i, B)) % B
-#define typeof(var) _Generic( (var),\
-char: "Char",\
-int: "Integer",\
-float: "Float",\
-char *: "String",\
-void *: "Pointer",\
-default: "Undefined")
 
 // Definição das variaveis que controlam a medição de tempo
 clock_t _ini, _fim;
@@ -103,7 +96,6 @@ int inserir(hash *tabela, unsigned B, string e){
         }
         
         if(strcmp(tabela->vet[pos], e) == 0){
-            // printf("Elemento repetido na posicao %d", pos);
             return -1;
         }
     }
@@ -123,30 +115,10 @@ int buscar(hash *tabela, unsigned B, string e){
 
         if(strcmp(tabela->vet[pos], e) == 0)
             return pos;
-        if(tabela->vet[pos] == "")
+        if(tabela->vet[pos] == "-")
             return -1;
     }
     return -1;
-}
-
-int busca_sequencial(string x, int n, string insercoes[]){
-    
-    // iterador que conterá a posicao do elemento e procurado, caso seja encontrado 
-    unsigned pos, aux;
-
-    aux = converter(x);
-    
-    // procura o elemento em todas as posições do vetor
-    for(pos = 0; pos < n; pos++) 
-        // testa se o elemento da posição atual é o elemento procurado de um por um
-        if(strcmp(x, insercoes[pos]) == 0){
-            printf("%s == %s, posicao = %d\n", x, insercoes[pos], pos);
-            break;
-        }
-            // para a busca segunrando a posição pos do elemento
-    
-    // retorna a posicao caso o elemento seja encontrado, cc retorna -1
-    return (pos == n) ? -1 : pos;
 }
 
 int main(int argc, char const *argv[]){
@@ -184,12 +156,11 @@ int main(int argc, char const *argv[]){
     printf("\ncomeco busca");
     for (int i = 0; i < M; i++){ //! rever a questão dos elementos repetidos
         printf("\ni = %d", i);
-        if(buscar(consultas[i], B, insercoes) != -1) // buscar consultas[i] na tabela hash
+        if(buscar(&tabela, B, consultas[i]) != -1) // buscar consultas[i] na tabela hash
             encontrados++;
     }
     // itens encontrados: 27411
     double tempo_busca = finaliza_tempo();
-
 
     printf("Colisoes na insercao: %d\n", colisoes);
     printf("Tempo de insercao   : %fs\n", tempo_insercao);
@@ -200,4 +171,4 @@ int main(int argc, char const *argv[]){
     free(consultas);
 
     return 0;
-    }
+}
