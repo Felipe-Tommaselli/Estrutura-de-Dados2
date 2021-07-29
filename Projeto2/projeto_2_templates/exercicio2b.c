@@ -4,7 +4,12 @@
 #include <assert.h>
 #include <string.h>
 #include <math.h>
-#define h(x, i, B) (h_mul(x, i, B) + i * h_div(x, i, B)) % B
+#define h(x, i, B) (h_mul(x, 0, B) + i * h_div(x, 0, B)) % B
+
+//funcao hash primario: (h_mul(x, 0, B)
+//funcao hash secundario: (h_mul(x, 0, B) + 2 * h_div(x, 0, B)) % B
+//funcao hash "terceriario": (h_mul(x, 0, B) + 3 * h_div(x, 0, B)) % B
+//...
 
 // Definição das variaveis que controlam a medição de tempo
 clock_t _ini, _fim;
@@ -105,7 +110,7 @@ int inserir(hash *tabela, unsigned B, string e){
 int buscar(hash *tabela, unsigned B, string e){
     unsigned pos, i, aux;
 
-    printf(" e = %s", e);
+    // printf(" e = %s", e);
 
     aux = converter(e);
 
@@ -153,9 +158,8 @@ int main(int argc, char const *argv[]){
     
     // busca dos dados na tabela hash
     inicia_tempo();
-    printf("\ncomeco busca");
     for (int i = 0; i < M; i++){ //! rever a questão dos elementos repetidos
-        printf("\ni = %d", i);
+        //printf("\ni = %d", i);
         if(buscar(&tabela, B, consultas[i]) != -1) // buscar consultas[i] na tabela hash
             encontrados++;
     }
