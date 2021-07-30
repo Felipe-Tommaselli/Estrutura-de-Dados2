@@ -29,6 +29,7 @@ typedef char *string;
 
 // struct hash com vetor de strings 
 typedef struct{
+    // vetor com B elementos, sendo B = 150001
     string *vet; 
 } hash;
 
@@ -88,7 +89,7 @@ o elemento ja esteja ocupada, a tecnica de rehash por overflow progressivo é ap
 conforme o iterador i é incrementado a partir das psoicoes ja ocupadas, a funcao hash sofre 
 alterações, gerando novas possiveis psoicoes, até alguma ser encontrada para armazenar o elemento
 (considerando B suficientemente grande)*/
-int inserir(hash *tabela, unsigned *colisoes, unsigned B, string e, unsigned (*fHash)(unsigned, unsigned, unsigned)){
+int inserir(hash *tabela, unsigned B, string e, unsigned (*fHash)(unsigned, unsigned, unsigned)){
     
     // declaracao de variaveis para uso posterior
     unsigned pos, i, aux;
@@ -120,6 +121,7 @@ int inserir(hash *tabela, unsigned *colisoes, unsigned B, string e, unsigned (*f
     // erro na insercao
     return -1;
 }
+
 /* A busca no hashing fechado constitui basicamente de uma procura quase que certeira,
 a partir do calculo da posição pela funcao hash, pode-se procurar diretamente na posicao 
 que espera-se que o elemento esteja armazenado, caso haja rehash na insercao, a busca 
@@ -180,7 +182,7 @@ int main(int argc, char const *argv[]){
 
     // HASHING FECHADO
 
-    // cria uma tabela do tipo hash(com um vetor de tamanho B)
+    // cria uma tabela do tipo hash (com um vetor de tamanho B)
     hash tabela;
 
     //* HASH POR DIVISÃO
@@ -196,7 +198,7 @@ int main(int argc, char const *argv[]){
     for (int i = 0; i < N; i++)
         // inserir insercoes[i] na tabela hash utilizando hash por divisao
         // caso a funcao insserir retorne i > 0, houve ao menos uma colisão  
-        if(inserir(&tabela, &colisoes_h_div, B, insercoes[i], &h_div) > 0)
+        if(inserir(&tabela, B, insercoes[i], &h_div) > 0)
             colisoes_h_div++;    
     
     // finaliza contagem de tempo
@@ -232,7 +234,7 @@ int main(int argc, char const *argv[]){
     for (int i = 0; i < N; i++)
         // inserir insercoes[i] na tabela hash utilizando hash por multiplicacao
         // caso a funcao insserir retorne i > 0, houve ao menos uma colisão  
-        if(inserir(&tabela, &colisoes_h_mul, B, insercoes[i], &h_mul) > 0) 
+        if(inserir(&tabela, B, insercoes[i], &h_mul) > 0) 
             colisoes_h_mul++;
     
     // finaliza contagem de tempo
