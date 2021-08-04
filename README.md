@@ -1,8 +1,8 @@
 # **Estrutura-de-Dados2** / **Data-Structures2**
 
-Compilado de programas, anotações e atividades da disciplina de estrutura de dados 2 (ssc0606) oferecida pelo ICMC-USP.
+Compilado de programas, anotações e atividades da disciplina de estrutura de dados 2 (ssc0606) oferecida pelo ICMC-USP. Todos os programas desenvolvidos na disciplina foram feitos em linguagem C e possuem apenas fins educacionais.
 
-Compiled of syllabuses, notes and activities from the data structure discipline 2 (ssc0606) offered by ICMC-USP.
+Compiled of syllabuses, notes and activities from the data structure discipline 2 (ssc0606) offered by ICMC-USP. All programs developed in the discipline were written in C language and have educational purposes only.
 
 ## A disciplina/ The discipline
 
