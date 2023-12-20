@@ -1,4 +1,4 @@
-# **Estrutura-de-Dados2** / **Data-Structures2**
+# **Estrutura-de-Dados2** / **Data-Structures2** (2021)
 
 Compilado de programas, anotações e atividades da disciplina de estrutura de dados 2 (ssc0606) oferecida pelo ICMC-USP. Todos os programas desenvolvidos na disciplina foram feitos em linguagem C e possuem apenas fins educacionais.
 
